@@ -13,26 +13,27 @@ export default class ItemsContainer extends Component {
 
   componentDidMount() {
     const urls = ['http://localhost:3000/items', 'http://localhost:3000/users'];
+    this.setState({isLoading: true});
     Promise.all(urls.map(url =>
       fetch(url).then(resp => resp.json() ) 
-    )).then(objects => {
-      console.log(objects);
-      objects[0].map(item => {
-        objects[1].map(profile => {
-          if (profile.id === item.itemowner) {
-            item.itemowner = profile;
+    )).then(responses => {
+      responses[0].map(item => {
+        responses[1].map(user => {
+          if (user.id === item.itemowner) {
+            item.itemowner = user;
           }
         })
       });
-      this.setState({ itemsData: objects[0] });
+      this.setState({ itemsData: responses[0] });
       console.log(this.state.itemsData)
-    })
+    }).then(() => this.setState({isLoading: false}))
+    .catch(error => console.log(error));
   }
 
   render() {  
     return (
       <div>
-        <Items itemsData={this.itemsData}/>
+        <Items itemsData={this.state.itemsData}/>
       </div>
     )
   }
