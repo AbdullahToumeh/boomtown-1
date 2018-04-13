@@ -11,21 +11,14 @@ import Login from './containers/Login';
 import Items from './containers/Items';
 import Share from './containers/Share';
 import NotFound from './containers/NotFound';
+import Routes from './routes';
 
 import {BrowserRouter as Router, Route, Link, Switch} from 'react-router-dom';
 
 const Boomtown = () => (
     <MuiThemeProvider muiTheme={muiTheme}>
         <Layout>
-            <Router>
-                <Switch>
-                    <Route exact path="/" component={Items} />
-                    <Route exact path="/login" component={Login} />
-                    <Route exact path="/share" component={Share} />
-                    <Route path="/*" component={NotFound} />
-
-                </Switch>
-            </Router>
+            <Routes />
         </Layout>
     </MuiThemeProvider>
 );
