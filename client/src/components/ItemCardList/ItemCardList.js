@@ -5,6 +5,7 @@ import Masonry from 'react-masonry-component';
 
 const styles = {
   width: '100vw',
+  margin: '0 auto',
   li: {
     width: '350px',
     marginBottom: '20px'
@@ -20,7 +21,7 @@ const masonryOptions = {
 
 const ItemCardList = (props) => {
   return (
-    <Masonry elementType={'ul'} options={masonryOptions} style={styles} disableImagesLoaded={false}
+    <Masonry elementType={'ul'} className={'masonry-grid'} options={masonryOptions} style={styles} disableImagesLoaded={false}
     updateOnEachImageLoad={true}>
       {props.itemsData.map((item, index) => (
         <li key={index} style={styles.li} className={'grid-item'}>

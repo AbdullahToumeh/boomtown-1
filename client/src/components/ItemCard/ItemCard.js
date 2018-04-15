@@ -4,6 +4,7 @@ import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'mat
 import FlatButton from 'material-ui/FlatButton';
 import {Link} from 'react-router-dom';
 import Gravatar from 'react-gravatar';
+import Moment from 'moment';
 
 const styles = {
   width: '350px',
@@ -16,12 +17,8 @@ const styles = {
 }
 
 const dateComparison = (date) => {
-  const todayDate = new Date();
-  const duration = new Date(todayDate - date);
-  console.log(todayDate);
-  console.log(date)
   return (
-    "A person"
+    Moment(date).fromNow()
   )
 }
  
