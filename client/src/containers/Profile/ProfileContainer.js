@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Profile from './Profile';
-import ItemCardList from '../../components/ItemCardList'
+import ItemCardList from '../../components/ItemCardList';
+import Header from '../../components/HeaderBar';
 
 export default class ProfileContainer extends Component {
   constructor() {
@@ -38,6 +39,7 @@ export default class ProfileContainer extends Component {
   render() {
     return (
       <div>
+        <Header />
         <Profile profileInfo={this.props.location.state} itemInfo={this.state.itemsData}/>
         <ItemCardList itemsData={this.state.itemsData} />
       </div>
