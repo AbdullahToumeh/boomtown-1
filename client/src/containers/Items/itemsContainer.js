@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Items from './items';
 import ItemCard from '../../components/ItemCard';
+import Header from '../../components/HeaderBar/';
 
 export default class ItemsContainer extends Component {
   constructor() {
@@ -33,6 +34,7 @@ export default class ItemsContainer extends Component {
   render() {  
     return (
       <div>
+        <Header />
         <Items itemsData={this.state.itemsData}/>
       </div>
     )
