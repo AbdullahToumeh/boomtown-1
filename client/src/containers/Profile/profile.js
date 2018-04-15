@@ -1,15 +1,16 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 
 export default class Profile extends Component {
   render() {
-    console.log(this.props);
+    console.log(this.props.itemInfo);
     return (
-      <div>
-        <h1>{this.props.location.state.fullname}</h1>
-        <p>{this.props.location.state.bio}</p>
-        <p>{this.props.location.state.email}</p>
-      </div>
+      <Card>
+        <h1>{this.props.profileInfo.fullname}</h1>
+        <p>{this.props.profileInfo.bio}</p>
+        <p>{this.props.profileInfo.email}</p>
+      </Card>
     )
   }
 }

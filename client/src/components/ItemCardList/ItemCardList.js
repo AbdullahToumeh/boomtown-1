@@ -1,22 +1,33 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ItemCard from '../ItemCard';
+import Masonry from 'react-masonry-component';
 
 const styles = {
-  display: 'flex',
-  flexWrap: 'wrap',
-  justifyContent: 'space-between'
+  width: '100vw',
+  li: {
+    width: '350px',
+    marginBottom: '20px'
+  }
 }
+
+const masonryOptions = {
+  horizontalOrder: true,
+  columnWidth: 350,
+  gutter: 20
+}
+
 
 const ItemCardList = (props) => {
   return (
-    <ul style={styles}>
+    <Masonry elementType={'ul'} options={masonryOptions} style={styles} disableImagesLoaded={false}
+    updateOnEachImageLoad={true}>
       {props.itemsData.map((item, index) => (
-        <li key={index}>
+        <li key={index} style={styles.li} className={'grid-item'}>
           <ItemCard itemsData={item} />
         </li>
       ))}
-    </ul>
+    </Masonry>
   )
 }
 
