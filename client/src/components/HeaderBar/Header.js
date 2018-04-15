@@ -7,7 +7,7 @@ import {Link} from 'react-router-dom';
 
 const styles = {
   width: '100vw',
-  padding: '15px',
+  padding: '10px',
   marginBottom: '50px',
   display: 'flex',
   justifyContent: 'space-between',

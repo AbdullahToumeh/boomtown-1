@@ -9,7 +9,7 @@ const styles = {
   marginBottom: '50px',
   display: 'flex',
   padding: '30px',
-  margin: '0 auto',
+  margin: '0 auto 50px',
   justifyContent: 'space-between',
   gravatar: {
     borderRadius: '50%'

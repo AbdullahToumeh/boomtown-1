@@ -4,7 +4,7 @@ import ItemCard from '../ItemCard';
 import Masonry from 'react-masonry-component';
 
 const styles = {
-  width: '100vw',
+  width: '1090px',
   margin: '0 auto',
   li: {
     width: '350px',
