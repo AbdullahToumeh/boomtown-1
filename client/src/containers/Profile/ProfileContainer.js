@@ -2,8 +2,10 @@ import React, {Component} from 'react';
 import Profile from './Profile';
 import ItemCardList from '../../components/ItemCardList';
 import Header from '../../components/HeaderBar';
+import { fetchProfileItemsFromUrl } from '../../redux/modules/profile';
+import { connect } from 'react-redux';
 
-export default class ProfileContainer extends Component {
+class ProfileContainer extends Component {
   constructor() {
     super()
     this.state = {
@@ -13,6 +15,10 @@ export default class ProfileContainer extends Component {
   }
 
   componentDidMount() {
+
+    this.props.dispatch(fetchProfileItemsFromUrl());
+
+
     const urls = ['http://localhost:3000/items', 'http://localhost:3000/users'];
     this.setState({isLoading: true});
     Promise.all(urls.map(url =>
@@ -40,8 +46,14 @@ export default class ProfileContainer extends Component {
       <div>
         <Header />
         <Profile profileInfo={this.props.location.state} itemInfo={this.state.itemsData}/>
-        <ItemCardList itemsData={this.state.itemsData} />
+        <ItemCardList itemsData={this.props.items} />
       </div>
     )
   }
 }
+
+export default connect(state => {
+  return {
+    items: state.profileItems
+  }
+})(ProfileContainer);
