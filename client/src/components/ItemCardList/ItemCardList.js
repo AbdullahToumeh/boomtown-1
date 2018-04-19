@@ -2,15 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ItemCard from '../ItemCard';
 import Masonry from 'react-masonry-component';
-
-const styles = {
-  width: '1090px',
-  margin: '0 auto',
-  li: {
-    width: '350px',
-    marginBottom: '20px'
-  }
-}
+import './style.css';
 
 const masonryOptions = {
   horizontalOrder: true,
@@ -21,10 +13,10 @@ const masonryOptions = {
 
 const ItemCardList = (props) => {
   return (
-    <Masonry elementType={'ul'} className={'masonry-grid'} options={masonryOptions} style={styles} disableImagesLoaded={false}
+    <Masonry elementType={'ul'} className={'masonry-grid'} options={masonryOptions} disableImagesLoaded={false}
     updateOnEachImageLoad={true}>
       {props.itemsData.map((item, index) => (
-        <li key={index} style={styles.li} className={'grid-item'}>
+        <li key={index} className={'grid-item'}>
           <ItemCard itemsData={item} />
         </li>
       ))}

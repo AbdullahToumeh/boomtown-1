@@ -3,36 +3,18 @@ import PropTypes from 'prop-types';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import Gravatar from 'react-gravatar';
 import Paper from 'material-ui/Paper';
-
-const styles = {
-  width: '800px',
-  marginBottom: '50px',
-  display: 'flex',
-  padding: '30px',
-  margin: '0 auto 50px',
-  justifyContent: 'space-between',
-  gravatar: {
-    borderRadius: '50%'
-  },
-  textField: {
-    padding: '0'
-  },
-  heading: {
-    padding: '0 0 25px',
-    fontSize: '2.5em'
-  }
-}
+import './style.css';
 
 export default class Profile extends Component {
   render() {
     return (
-      <Paper style={styles}>
-        <CardTitle title={this.props.profileInfo.fullname} subtitle={this.props.profileInfo.bio} titleStyle={styles.heading}/>
+      <Paper className={'profile-paper'}>
+        <CardTitle title={this.props.profileInfo.fullname} subtitle={this.props.profileInfo.bio} className={'profile-header'}/>
         <CardText>
-          <CardTitle title={this.props.itemInfo.length} subtitle="Items Shared" style={styles.textField}/>
-          <CardTitle title='0' subtitle='Items Borrowed' style={styles.textField}/>
+          <CardTitle className={'items-data'} title={this.props.itemInfo.length} subtitle="Items Shared"/>
+          <CardTitle title='0' className={'items-data'} subtitle='Items Borrowed'/>
         </CardText>
-        <Gravatar email={this.props.profileInfo.email} size={200} style={styles.gravatar}/>
+        <Gravatar email={this.props.profileInfo.email} className={'profile-avatar'} size={200} />
       </Paper>
     )
   }

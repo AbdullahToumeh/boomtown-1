@@ -28,7 +28,6 @@ export default class ProfileContainer extends Component {
       this.setState({ itemsData: responses[0] });
       let profileItems = this.state.itemsData.filter(item => (item.itemowner.id === this.props.match.params.itemownerId))
       this.setState({itemsData: profileItems});
-      console.log(this.state.itemsData);
     }).then(() => this.setState({isLoading: false}))
     .catch(error => console.log(error));
 
