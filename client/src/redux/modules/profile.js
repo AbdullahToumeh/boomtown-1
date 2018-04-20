@@ -4,11 +4,6 @@ const GET_PROFILE_ITEMS = 'GET_PROFILE_ITEMS';
 
 //Creating action creators
 
-// export const get_fetch_profile_items = (profileItems) => ({
-//   type: GET_FETCH_PROFILE_ITEMS,
-//   payload: profileItems
-// })
-
 export const get_profile_items = (items) => ({
   type: GET_PROFILE_ITEMS,
   payload: items
@@ -18,10 +13,6 @@ export const get_profile_items = (items) => ({
 const initialState = {
   profileItems: [],
   currentUserProfile: ''
-}
-
-const matchProfileItems = (items, profileId) => {
-  return items.filter(item => (item.itemowner.id === profileId))
 }
 
 //CREATING OUR THUNK FETCH ACTION
@@ -41,14 +32,18 @@ export const fetchProfileItemsFromUrl = profileId => dispatch => {
     return itemsAndUsers[0];
   }
 
+  const matchProfileItems = (items, profileId) => {
+    return items.filter(item => 
+      (item.itemowner.id === profileId)
+    )
+  }
+
   Promise.all(urls.map(url =>
     fetch(url).then(resp => resp.json() )
-  )).then(responses => dispatch(get_profile_items(matchProfileItems(combineItemsAndUsers(responses), profileId))));
-
-
-  // let profileItems = this.state.items.filter(item => (item.itemowner.id === this.props.match.params.itemownerId))
-
-  // dispatch(get_fetch_profile_items(profileItems));
+  ))
+  .then(responses => 
+    dispatch(get_profile_items(matchProfileItems(combineItemsAndUsers(responses), profileId)))
+  );
 }
 
 
