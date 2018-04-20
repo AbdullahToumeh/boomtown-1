@@ -17,7 +17,6 @@ class ItemsContainer extends Component {
   render() {  
     return (
       <div>
-        <Header />
         <Items itemsData={this.props.items}/>
       </div>
     )

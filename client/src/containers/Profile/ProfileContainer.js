@@ -19,7 +19,7 @@ class ProfileContainer extends Component {
   render() {
     return (
       <div>
-        <Header />
+        {/* <Header /> */}
         <Profile profileInfo={this.props.location.state} itemInfo={this.props.items}/>
         <ItemCardList itemsData={this.props.items} />
       </div>

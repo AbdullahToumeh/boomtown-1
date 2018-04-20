@@ -5,6 +5,8 @@ import registerServiceWorker from './registerServiceWorker';
 import { Provider } from 'react-redux';
 import store from './redux/store';
 
+import { BrowserRouter as Router } from 'react-router-dom';
+
 import './index.css';
 import muiTheme from './config/theme';
 
@@ -14,9 +16,11 @@ import Routes from './routes';
 const Boomtown = () => (
     <MuiThemeProvider muiTheme={muiTheme}>
         <Provider store={store}>
-            <Layout>
-                <Routes />
-            </Layout>
+            <Router>
+                <Layout>
+                    <Routes />
+                </Layout>
+            </Router>
         </Provider>
     </MuiThemeProvider>
 );
