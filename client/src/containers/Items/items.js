@@ -1,8 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
 import ItemCardList from '../../components/ItemCardList';
-
-import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
-import FlatButton from 'material-ui/FlatButton';
+import PropTypes from 'prop-types';
 
 const Items = (props) => {
   return (
@@ -11,3 +9,7 @@ const Items = (props) => {
 }
 
 export default Items;
+
+Items.propTypes = {
+  itemsData: PropTypes.array.isRequired
+}

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
+import PropTypes from 'prop-types';
 import Items from './items';
-import ItemCard from '../../components/ItemCard';
 import Header from '../../components/HeaderBar/';
 import { connect } from 'react-redux';
 import { fetchItemsFromUrl } from '../../redux/modules/items';
@@ -29,3 +29,8 @@ export default connect(state => {
     items: state.items.items
   }
 })(ItemsContainer);
+
+ItemsContainer.propTypes = {
+  items: PropTypes.array.isRequired,
+  dispatch: PropTypes.func.isRequired
+}

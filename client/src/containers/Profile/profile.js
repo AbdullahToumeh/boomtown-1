@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+import {CardTitle, CardText} from 'material-ui/Card';
 import Gravatar from 'react-gravatar';
 import Paper from 'material-ui/Paper';
 import './style.css';
@@ -18,4 +18,9 @@ export default class Profile extends Component {
       </Paper>
     )
   }
+}
+
+Profile.propTypes = {
+  profileInfo: PropTypes.object.isRequired,
+  itemInfo: PropTypes.array.isRequired
 }

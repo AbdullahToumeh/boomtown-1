@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import Profile from './Profile';
 import ItemCardList from '../../components/ItemCardList';
 import Header from '../../components/HeaderBar';
@@ -31,3 +32,9 @@ export default connect(state => {
     items: state.profileItems.profileItems
   }
 })(ProfileContainer);
+
+ProfileContainer.propTypes = {
+  items: PropTypes.array.isRequired,
+  location: PropTypes.object.isRequired
+}
+

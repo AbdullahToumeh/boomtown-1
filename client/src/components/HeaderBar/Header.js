@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
-import {cyan500, cyan200, grey900, grey500} from 'material-ui/styles/colors';
 import logo from '../../images/boomtown-logo.svg';
 import {Link} from 'react-router-dom';
 import './styles.css';
