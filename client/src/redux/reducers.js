@@ -3,6 +3,6 @@ import itemReducer from './modules/items';
 import profileReducer from './modules/profile';
 
 export default combineReducers({
-  items: itemReducer,
+  itemsData: itemReducer,
   profileItems: profileReducer
 });
