@@ -17,7 +17,7 @@ const initialState = {
 
 //CREATING OUR THUNK FETCH ACTION
 export const fetchItemsFromUrl = urls => dispatch => {
-  const urls = ['http://localhost:3000/items', 'http://localhost:3000/users'];
+  // const urls = ['http://localhost:3000/items', 'http://localhost:3000/users'];
 
   const combineItemsAndUsers = (itemsAndUsers) => {
     itemsAndUsers[0].map(item => {

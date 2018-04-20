@@ -1,13 +1,17 @@
 
- 
-//Definiing actions
-const GET_FETCH_PROFILE_ITEMS = "GET_FETCH_PROFILE_ITEMS";
+//Defining actions
+const GET_PROFILE_ITEMS = 'GET_PROFILE_ITEMS';
 
 //Creating action creators
 
-export const get_fetch_profile_items = (profileItems) => ({
-  type: GET_FETCH_PROFILE_ITEMS,
-  payload: profileItems
+// export const get_fetch_profile_items = (profileItems) => ({
+//   type: GET_FETCH_PROFILE_ITEMS,
+//   payload: profileItems
+// })
+
+export const get_profile_items = (items) => ({
+  type: GET_PROFILE_ITEMS,
+  payload: items
 })
 
 //creating initial state
@@ -16,10 +20,14 @@ const initialState = {
   currentUserProfile: ''
 }
 
+const matchProfileItems = (items, profileId) => {
+  return items.filter(item => (item.itemowner.id === profileId))
+}
 
 //CREATING OUR THUNK FETCH ACTION
 
-export const fetchProfileItemsFromUrl = urls => dispatch => {
+export const fetchProfileItemsFromUrl = profileId => dispatch => {
+
   const urls = ['http://localhost:3000/items', 'http://localhost:3000/users'];
 
   const combineItemsAndUsers = (itemsAndUsers) => {
@@ -33,15 +41,10 @@ export const fetchProfileItemsFromUrl = urls => dispatch => {
     return itemsAndUsers[0];
   }
 
-  const matchItemsToProfile = (allItems) => {
-    return allItems.filter(item => (item.itemowner.id === this.props.match.params.itemownerId))
-  }
-
   Promise.all(urls.map(url =>
     fetch(url).then(resp => resp.json() )
-  )).then(responses => dispatch(get_fetch_profile_items(matchItemsToProfile(combineItemsAndUsers(responses)))));
+  )).then(responses => dispatch(get_profile_items(matchProfileItems(combineItemsAndUsers(responses), profileId))));
 
-  console.log("THIS IS THE CONSOLE LOG:" + this.props);
 
   // let profileItems = this.state.items.filter(item => (item.itemowner.id === this.props.match.params.itemownerId))
 
@@ -49,13 +52,16 @@ export const fetchProfileItemsFromUrl = urls => dispatch => {
 }
 
 
+
+
+
 //creating reducer
 
 export default (state = initialState, action) => {
   switch(action.type) {
-    case GET_FETCH_PROFILE_ITEMS: {
-      const profileItems = action.payload
-      return {...state, profileItems}
+    case GET_PROFILE_ITEMS: {
+      const profileItems = [...action.payload];
+      return {...state, profileItems};
       break;
     }
     default: {

@@ -8,7 +8,9 @@ import { fetchItemsFromUrl } from '../../redux/modules/items';
 class ItemsContainer extends Component {
 
   componentDidMount() {
-    this.props.dispatch(fetchItemsFromUrl());
+    const urls = ['http://localhost:3000/items', 'http://localhost:3000/users'];
+
+    this.props.dispatch(fetchItemsFromUrl(urls));
   }
 
 
