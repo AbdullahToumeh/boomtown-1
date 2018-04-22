@@ -7,18 +7,21 @@ import SelectField from 'material-ui/SelectField';
 
 import MenuItem from 'material-ui/MenuItem';
 
-
-const TagFilterField = ({tags, dispatch}) => {
+const TagFilterField = ({tags, dispatch, selectedTags}) => {
   function handleFilter(value) {
     dispatch(get_itemFilters(value));
   }
 
-
   return (
-    <SelectField multiple hintText='filter by tag' onChange={(event, index, value) => handleFilter(value[0])}>
+    <SelectField multiple={true} hintText='filter by tag' onChange={(event, index, value) => handleFilter(value[0])}>
       {tags &&
         tags.map((tag, index) => (
-          <MenuItem key={index} value={tag} primaryText={tag}/>
+          <MenuItem 
+            key={index} 
+            value={tag} 
+            primaryText={tag}
+            checked={selectedTags && selectedTags.indexOf(tag) > -1}
+          />
         ))
       }
     </SelectField>

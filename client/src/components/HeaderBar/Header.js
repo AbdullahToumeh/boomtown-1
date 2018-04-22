@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
 import logo from '../../images/boomtown-logo.svg';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import './styles.css';
 import TagFilterField from '../TagFilterField/';
 import { connect } from 'react-redux';
@@ -33,10 +33,12 @@ class Header extends Component {
     const tags = this.getTags(this.props.itemsData.items);
     return (
       <Paper className={'header-bar'}>
-        <Link to={'/'} className={'home-logo'}>
-          <img src={logo} alt="Boomtown Logo" className={'home-logo'}/>
-        </Link>
-        {tags.length && <TagFilterField tags={tags}/>}
+        <div>
+          <Link to={'/'} className={'home-logo'}>
+            <img src={logo} alt="Boomtown Logo" className={'home-logo'}/>
+          </Link>
+          {tags.length && <TagFilterField tags={tags} selectedTags={this.props.itemsData.itemFilters}/>}
+        </div>
         <div>
           <RaisedButton label="My Profile" className={'my-profile-button'} primary={true}/>
           <RaisedButton label="Logout" secondary={true}/>

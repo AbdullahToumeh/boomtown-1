@@ -79,7 +79,10 @@ export default (state = initialState, action) => {
         itemFilters.push(action.payload);
       }
       else {
-        //remove the filter tag from the array
+        const index = itemFilters.indexOf(action.payload);
+        if (index > -1) {
+          itemFilters.splice(index, 1);
+        }
       }
       return {...state, itemFilters};
       break;
