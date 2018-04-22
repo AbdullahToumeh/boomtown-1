@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import LoadingWheel from '../../components/LoadingWheel';
 import Profile from './Profile';
 import ItemCardList from '../../components/ItemCardList';
 import { fetchProfileItemsFromUrl } from '../../redux/modules/profile';
@@ -14,9 +15,13 @@ class ProfileContainer extends Component {
   render() {
     return (
       <div>
-        {/* <Header /> */}
-        <Profile profileInfo={this.props.location.state} itemInfo={this.props.items} />
-        <ItemCardList itemsData={this.props.items} />
+        <Profile profileInfo={this.props.location.state} itemInfo={this.props.itemsData.profileItems} />
+        {
+          (this.props.itemsData.isLoading) ?
+            <p><LoadingWheel /></p>
+            :
+            <ItemCardList itemsData={this.props.itemsData.profileItems} />
+        }
       </div>
     );
   }
@@ -24,7 +29,7 @@ class ProfileContainer extends Component {
 
 export default connect(state => {
   return {
-    items: state.profileItems.profileItems
+    itemsData: state.profileItems
   };
 })(ProfileContainer);
 

@@ -1,6 +1,7 @@
 
 // Defining actions
 const GET_PROFILE_ITEMS = 'GET_PROFILE_ITEMS';
+const GET_IS_LOADING = 'GET_IS_LOADING';
 
 // Creating action creators
 
@@ -9,10 +10,14 @@ export const get_profile_items = (items) => ({
   payload: items
 });
 
+export const get_is_loading = () => ({
+  type: GET_IS_LOADING
+});
+
 // creating initial state
 const initialState = {
   profileItems: [],
-  currentUserProfile: ''
+  isLoading: false
 };
 
 // CREATING OUR THUNK FETCH ACTION
@@ -30,7 +35,7 @@ export const fetchProfileItemsFromUrl = profileId => dispatch => {
     });
     return itemsAndUsers[0];
   };
-
+  dispatch(get_is_loading());
   const matchProfileItems = (items, profileId) => {
     return items.filter(item =>
       (item.itemowner.id === profileId)
@@ -51,7 +56,10 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case GET_PROFILE_ITEMS: {
       const profileItems = [...action.payload];
-      return { ...state, profileItems };
+      return { ...state, profileItems, isLoading: false };
+    }
+    case GET_IS_LOADING: {
+      return { ...state, isLoading: true };
     }
     default: {
       return {
