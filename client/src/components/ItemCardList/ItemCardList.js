@@ -7,8 +7,11 @@ import './style.css';
 
 const masonryOptions = {
   horizontalOrder: true,
-  columnWidth: 350,
-  gutter: 20
+  itemSelector: '.grid-item',
+  columnWidth: '.grid-item',
+  percentPosition: true,
+  gutter: 20,
+  fitWidth: true
 };
 
 

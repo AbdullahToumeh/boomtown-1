@@ -33,7 +33,7 @@ class ItemsContainer extends Component {
     return (
       <div>
         {
-          (this.props.itemsData.isLoading) ?
+          (this.props.itemsData.isLoading) ? 
           <p><LoadingWheel /></p>
           :
           <Items itemsData={this.filterItems(this.props.itemsData)} />
