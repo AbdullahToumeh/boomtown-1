@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import { BrowserRouter as Router } from 'react-router-dom';
+
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import registerServiceWorker from './registerServiceWorker';
-import { Provider } from 'react-redux';
 import store from './redux/store';
-
-import { BrowserRouter as Router } from 'react-router-dom';
 
 import './index.css';
 import muiTheme from './config/theme';

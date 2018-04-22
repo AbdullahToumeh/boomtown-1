@@ -1,16 +1,18 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
+
 import logo from '../../images/boomtown-logo.svg';
-import { Link } from 'react-router-dom';
 import './styles.css';
 import TagFilterField from '../TagFilterField/';
-import { connect } from 'react-redux';
 
 class Header extends Component {
-
   getTags = items => {
-    let tags = [];
+    const tags = [];
     if (items.length && items[0] !== undefined) {
       items.map(item => {
         if (item.tags !== undefined) {
@@ -19,37 +21,36 @@ class Header extends Component {
               if (!tags.includes(tag)) {
                 tags.push(tag);
               }
-            })
+            });
           }
         }
-      })
+      });
     }
     return tags;
   }
-
 
 
   render() {
     const tags = this.getTags(this.props.itemsData.items);
     return (
       <Paper className={'header-bar'}>
-        <div>
+        <div className={'home-filter-area'}>
           <Link to={'/'} className={'home-logo'}>
-            <img src={logo} alt="Boomtown Logo" className={'home-logo'}/>
+            <img src={logo} alt="Boomtown Logo" className={'home-logo'} />
           </Link>
-          {tags.length && <TagFilterField tags={tags} selectedTags={this.props.itemsData.itemFilters}/>}
+          {tags.length && <TagFilterField tags={tags} selectedTags={this.props.itemsData.itemFilters} />}
         </div>
         <div>
-          <RaisedButton label="My Profile" className={'my-profile-button'} primary={true}/>
-          <RaisedButton label="Logout" secondary={true}/>
+          <RaisedButton label="My Profile" className={'my-profile-button'} primary />
+          <RaisedButton label="Logout" secondary />
         </div>
       </Paper>
-    )
+    );
   }
 }
 
 export default connect(state => {
   return {
     itemsData: state.itemsData
-  }
+  };
 })(Header);
