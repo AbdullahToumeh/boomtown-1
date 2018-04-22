@@ -1,3 +1,7 @@
 .appContent {
   display: block;
 }
+
+p {
+  text-align: center;
+}

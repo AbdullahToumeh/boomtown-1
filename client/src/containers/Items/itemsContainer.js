@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import LoadingWheel from '../../components/LoadingWheel';
 import Items from './items';
 import { fetchItemsFromUrl } from '../../redux/modules/items';
 
@@ -32,7 +33,7 @@ class ItemsContainer extends Component {
     return (
       <div>
         {
-          (this.props.itemsData.isLoading) ? <p>Loading...</p> : <Items itemsData={this.filterItems(this.props.itemsData)} />
+          (this.props.itemsData.isLoading) ? <p><LoadingWheel /></p> : <Items itemsData={this.filterItems(this.props.itemsData)} />
         }
       </div>
     );
