@@ -1,9 +1,15 @@
-import React, {Component} from 'react';
+import React from 'react';
 
-export default class NotFound extends Component {
-  render() {
+import grumpyCat from '../../images/grumpy-cat.svg';
+import './style.css';
+
+const NotFound = () => {
     return (
-      <h1>THIS IS THE NOT FOUND PAGE</h1>
-    )
-  }
-}
+      <div className={'not-found-page'}>
+        <img src={grumpyCat} alt={'Not found grumpy cat'} className={'grumpy-cat'} />
+        <h1>Nope</h1>
+      </div>
+    );
+};
+
+export default NotFound;

@@ -1,0 +1,13 @@
+.grumpy-cat {
+  width: 500px;
+}
+
+.not-found-page {
+  text-align: center;
+}
+
+h1 {
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 30px;
+}
