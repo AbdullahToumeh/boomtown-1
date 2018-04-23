@@ -41,7 +41,7 @@ class Header extends Component {
                             className={'home-logo'}
                         />
                     </Link>
-                    {this.props.profileItems.length === 0 &&
+                    {!window.location.href.includes('/profile') &&
                         tags.length && (
                             <TagFilterField
                                 tags={tags}
