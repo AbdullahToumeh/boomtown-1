@@ -73,9 +73,7 @@ Header.propTypes = {
     profileItems: PropTypes.arrayOf(PropTypes.object)
 };
 
-export default connect(state => {
-    return {
-        itemsData: state.itemsData,
-        profileItems: state.profileItems.profileItems
-    };
-})(Header);
+export default connect(state => ({
+    itemsData: state.itemsData,
+    profileItems: state.profileItems.profileItems
+}))(Header);

@@ -14,23 +14,21 @@ const masonryOptions = {
     fitWidth: true
 };
 
-const ItemCardList = props => {
-    return (
-        <Masonry
-            elementType={'ul'}
-            className={'masonry-grid'}
-            options={masonryOptions}
-            disableImagesLoaded={false}
-            updateOnEachImageLoad
-        >
-            {props.itemsData.map((item, index) => (
-                <li key={index} className={'grid-item'}>
-                    <ItemCard itemsData={item} />
-                </li>
-            ))}
-        </Masonry>
-    );
-};
+const ItemCardList = props => (
+    <Masonry
+        elementType={'ul'}
+        className={'masonry-grid'}
+        options={masonryOptions}
+        disableImagesLoaded={false}
+        updateOnEachImageLoad
+    >
+        {props.itemsData.map((item, index) => (
+            <li key={index} className={'grid-item'}>
+                <ItemCard itemsData={item} />
+            </li>
+        ))}
+    </Masonry>
+);
 
 export default ItemCardList;
 
