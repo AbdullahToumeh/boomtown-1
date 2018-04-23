@@ -16,16 +16,16 @@ class ItemsContainer extends Component {
         ];
 
         this.props.dispatch(fetchItemsFromUrl(urls));
-        console.log('ISLOADING: ' + this.props.itemsData.isLoading);
     }
 
     filterItems = itemsData => {
         if (itemsData.itemFilters.length > 0) {
-            const filteredItems = itemsData.items.filter(item => {
-                return item.tags.filter(tag =>
-                    itemsData.itemFilters.find(filter => filter === tag)
-                ).length;
-            });
+            const filteredItems = itemsData.items.filter(
+                item =>
+                    item.tags.filter(tag =>
+                        itemsData.itemFilters.find(filter => filter === tag)
+                    ).length
+            );
             return filteredItems;
         }
         return itemsData.items;
@@ -44,13 +44,13 @@ class ItemsContainer extends Component {
     }
 }
 
-export default connect(state => {
-    return {
-        itemsData: state.itemsData
-    };
-})(ItemsContainer);
+export default connect(state => ({
+    itemsData: state.itemsData
+}))(ItemsContainer);
 
 ItemsContainer.propTypes = {
-    itemsData: PropTypes.object.isRequired,
+    itemsData: PropTypes.objectOf(
+        PropTypes.oneOfType([PropTypes.array, PropTypes.string, PropTypes.bool])
+    ).isRequired,
     dispatch: PropTypes.func.isRequired
 };

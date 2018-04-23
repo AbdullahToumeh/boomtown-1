@@ -26,7 +26,6 @@ class Header extends Component {
                 }
             });
         }
-        console.log(this.props.profileItems);
         return tags;
     };
 
@@ -62,6 +61,17 @@ class Header extends Component {
         );
     }
 }
+
+Header.defaultProps = {
+    profileItems: []
+};
+
+Header.propTypes = {
+    itemsData: PropTypes.objectOf(
+        PropTypes.oneOfType([PropTypes.array, PropTypes.string, PropTypes.bool])
+    ).isRequired,
+    profileItems: PropTypes.arrayOf(PropTypes.object)
+};
 
 export default connect(state => {
     return {

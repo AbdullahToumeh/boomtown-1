@@ -33,14 +33,27 @@ class ProfileContainer extends Component {
     }
 }
 
-export default connect(state => {
-    return {
-        itemsData: state.profileItems
-    };
-})(ProfileContainer);
+ProfileContainer.defaultProps = {
+    match: {}
+};
+
+export default connect(state => ({
+    itemsData: state.profileItems
+}))(ProfileContainer);
 
 ProfileContainer.propTypes = {
-    items: PropTypes.arrayOf(PropTypes.array).isRequired,
-    location: PropTypes.object.isRequired,
-    dispatch: PropTypes.func.isRequired
+    itemsData: PropTypes.objectOf(
+        PropTypes.oneOfType([PropTypes.array, PropTypes.bool, PropTypes.string])
+    ).isRequired,
+    location: PropTypes.objectOf(
+        PropTypes.oneOfType([PropTypes.string, PropTypes.object])
+    ).isRequired,
+    dispatch: PropTypes.func.isRequired,
+    match: PropTypes.objectOf(
+        PropTypes.oneOfType([
+            PropTypes.bool,
+            PropTypes.object,
+            PropTypes.string
+        ])
+    )
 };

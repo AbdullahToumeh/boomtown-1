@@ -56,5 +56,13 @@ const ItemCard = props => {
 export default ItemCard;
 
 ItemCard.propTypes = {
-    itemsData: PropTypes.object.isRequired
+    itemsData: PropTypes.objectOf(
+        PropTypes.oneOfType([
+            PropTypes.string,
+            PropTypes.number,
+            PropTypes.array,
+            PropTypes.object,
+            PropTypes.bool
+        ])
+    ).isRequired
 };
