@@ -7,6 +7,7 @@ import Profile from './Profile';
 import ItemCardList from '../../components/ItemCardList';
 import { fetchProfileItemsFromUrl } from '../../redux/modules/profile';
 
+
 class ProfileContainer extends Component {
   componentDidMount() {
     this.props.dispatch(fetchProfileItemsFromUrl(this.props.match.params.itemownerId));

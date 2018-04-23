@@ -26,9 +26,9 @@ class Header extends Component {
         }
       });
     }
+    console.log(this.props.profileItems);
     return tags;
   }
-
 
   render() {
     const tags = this.getTags(this.props.itemsData.items);
@@ -38,7 +38,7 @@ class Header extends Component {
           <Link to={'/'} className={'home-logo'}>
             <img src={logo} alt="Boomtown Logo" className={'home-logo'} />
           </Link>
-          {tags.length && <TagFilterField tags={tags} selectedTags={this.props.itemsData.itemFilters} />}
+            { this.props.profileItems.length === 0 && tags.length && <TagFilterField tags={tags} selectedTags={this.props.itemsData.itemFilters} /> }
         </div>
         <div>
           <RaisedButton label="My Profile" className={'my-profile-button'} primary />
@@ -51,6 +51,7 @@ class Header extends Component {
 
 export default connect(state => {
   return {
-    itemsData: state.itemsData
+    itemsData: state.itemsData,
+    profileItems: state.profileItems.profileItems
   };
 })(Header);

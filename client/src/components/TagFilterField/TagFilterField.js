@@ -13,7 +13,7 @@ const TagFilterField = ({ tags, dispatch, selectedTags }) => {
   }
 
   return (
-    <SelectField multiple hintText={'Filter by Tag'} onChange={(event, index, value) => handleFilter(value[0])}>
+    <SelectField className={'filter-area'} multiple hintText={'Filter by Tag'} onChange={(event, index, value) => handleFilter(value[0])}>
       {tags &&
         tags.map((tag, index) => (
           <MenuItem
