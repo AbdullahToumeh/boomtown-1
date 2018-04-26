@@ -40,7 +40,7 @@ const ItemCard = props => {
                     avatar={<Gravatar email={item.itemowner.email} />}
                 />
             </Link>
-            <CardTitle title={item.title} subtitle={item.tags.toString()} />
+            <CardTitle title={item.title} subtitle={[]} />
             <CardText>{item.description}</CardText>
             <CardActions>
                 <RaisedButton
@@ -66,3 +66,5 @@ ItemCard.propTypes = {
         ])
     ).isRequired
 };
+
+// RE ADD TAGS BACK INTO THE CARD WITH item.tags.join()
