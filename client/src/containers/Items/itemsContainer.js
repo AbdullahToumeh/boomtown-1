@@ -11,8 +11,8 @@ import './style.css';
 class ItemsContainer extends Component {
     componentDidMount() {
         const urls = [
-            'http://localhost:3000/items',
-            'http://localhost:3000/users'
+            'http://localhost:3001/items',
+            'http://localhost:3001/users'
         ];
 
         this.props.dispatch(fetchItemsFromUrl(urls));
