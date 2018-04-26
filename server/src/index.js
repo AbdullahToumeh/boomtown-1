@@ -2,9 +2,12 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import { graphqlExpress, graphiqlExpress } from 'apollo-server-express';
 import schema from './schema';
+import cors from 'cors';
 
 const app = express();
 const port = 3333;
+
+app.use('*', cors());
 
 // Where we will send all of our GraphQL requests
 app.use('/graphql', bodyParser.json(), graphqlExpress({ schema }));
