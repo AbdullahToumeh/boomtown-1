@@ -19,6 +19,7 @@ const itemsQuery = gql`
             description
             imageurl
             itemowner {
+                id
                 fullname
                 bio
                 email

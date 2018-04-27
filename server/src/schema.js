@@ -27,7 +27,7 @@ const typeDefs = `
     items: [Item]
     users: [User]
     item(id: ID!): Item
-    user(id: ID!): User
+    user(id: String!): User
   }
 `;
 
