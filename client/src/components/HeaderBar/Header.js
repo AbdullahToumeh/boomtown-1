@@ -3,12 +3,23 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
+import { Query } from 'react-apollo';
+import gql from 'graphql-tag';
+
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
 
 import logo from '../../images/boomtown-logo.svg';
 import './styles.css';
 import TagFilterField from '../TagFilterField/';
+
+const itemsQuery = gql`
+    query {
+        items {
+            tags
+        }
+    }
+`;
 
 class Header extends Component {
     getTags = items => {
@@ -30,50 +41,62 @@ class Header extends Component {
     };
 
     render() {
-        const tags = this.getTags(this.props.itemsData.items);
         return (
-            <Paper className={'header-bar'}>
-                <div className={'home-filter-area'}>
-                    <Link to={'/'} className={'home-logo'}>
-                        <img
-                            src={logo}
-                            alt="Boomtown Logo"
-                            className={'home-logo'}
-                        />
-                    </Link>
-                    {!window.location.href.includes('/profile') &&
-                        tags.length && (
-                            <TagFilterField
-                                tags={tags}
-                                selectedTags={this.props.itemsData.itemFilters}
-                            />
-                        )}
-                </div>
-                <div>
-                    <RaisedButton
-                        label="My Profile"
-                        className={'my-profile-button'}
-                        primary
-                    />
-                    <RaisedButton label="Logout" secondary />
-                </div>
-            </Paper>
+            <Query query={itemsQuery}>
+                {({ loading, error, data }) => {
+                    if (loading) return <p>loading</p>;
+                    const tags = this.getTags(data.items);
+                    console.log(this.props.itemsData);
+                    return (
+                        <Paper className={'header-bar'}>
+                            <div className={'home-filter-area'}>
+                                <Link to={'/'} className={'home-logo'}>
+                                    <img
+                                        src={logo}
+                                        alt="Boomtown Logo"
+                                        className={'home-logo'}
+                                    />
+                                </Link>
+                                {!window.location.href.includes('/profile') &&
+                                    tags.length && (
+                                        <TagFilterField
+                                            tags={tags}
+                                            selectedTags={
+                                                this.props.itemsData.itemFilters
+                                            }
+                                        />
+                                    )}
+                            </div>
+                            <div>
+                                <RaisedButton
+                                    label="My Profile"
+                                    className={'my-profile-button'}
+                                    primary
+                                />
+                                <RaisedButton label="Logout" secondary />
+                            </div>
+                        </Paper>
+                    );
+                }}
+            </Query>
         );
     }
 }
 
-Header.defaultProps = {
-    profileItems: []
-};
+// Header.defaultProps = {
+//     profileItems: []
+// };
 
-Header.propTypes = {
-    itemsData: PropTypes.objectOf(
-        PropTypes.oneOfType([PropTypes.array, PropTypes.string, PropTypes.bool])
-    ).isRequired,
-    profileItems: PropTypes.arrayOf(PropTypes.object)
-};
+// Header.propTypes = {
+//     itemsData: PropTypes.objectOf(
+//         PropTypes.oneOfType([PropTypes.array, PropTypes.string, PropTypes.bool])
+//     ).isRequired,
+//     profileItems: PropTypes.arrayOf(PropTypes.object)
+// };
 
 export default connect(state => ({
     itemsData: state.itemsData,
     profileItems: state.profileItems.profileItems
 }))(Header);
+
+// export default Header;

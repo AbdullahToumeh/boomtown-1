@@ -25,6 +25,7 @@ const profileQuery = gql`
                 tags
                 created
                 available
+                tags
                 itemowner {
                     id
                     fullname
@@ -44,12 +45,6 @@ const profileQuery = gql`
 `;
 
 class ProfileContainer extends Component {
-    // componentDidMount() {
-    //     this.props.dispatch(
-    //         fetchProfileItemsFromUrl(this.props.match.params.itemownerId)
-    //     );
-    // }
-
     render() {
         const userId = this.props.match.params.itemownerId;
         return (

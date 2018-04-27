@@ -18,6 +18,7 @@ const itemsQuery = gql`
             title
             description
             imageurl
+            tags
             itemowner {
                 id
                 fullname
@@ -34,28 +35,6 @@ const itemsQuery = gql`
 `;
 
 class ItemsContainer extends Component {
-    // componentDidMount() {
-    //     const urls = [
-    //         'http://localhost:3001/items',
-    //         'http://localhost:3001/users'
-    //     ];
-
-    //     this.props.dispatch(fetchItemsFromUrl(urls));
-    // }
-
-    // filterItems = itemsData => {
-    //     if (itemsData.itemFilters.length > 0) {
-    //         const filteredItems = itemsData.items.filter(
-    //             item =>
-    //                 item.tags.filter(tag =>
-    //                     itemsData.itemFilters.find(filter => filter === tag)
-    //                 ).length
-    //         );
-    //         return filteredItems;
-    //     }
-    //     return itemsData.items;
-    // };
-
     render() {
         return (
             <Query query={itemsQuery}>

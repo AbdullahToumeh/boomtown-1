@@ -40,7 +40,7 @@ const ItemCard = props => {
                     avatar={<Gravatar email={item.itemowner.email} />}
                 />
             </Link>
-            <CardTitle title={item.title} subtitle={[]} />
+            <CardTitle title={item.title} subtitle={item.tags.join()} />
             <CardText>{item.description}</CardText>
             <CardActions>
                 <RaisedButton
