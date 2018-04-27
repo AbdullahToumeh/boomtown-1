@@ -36,19 +36,28 @@ const itemsQuery = gql`
 
 class ItemsContainer extends Component {
     render() {
+        console.log(this.props.itemFilters);
         return (
             <Query query={itemsQuery}>
                 {({ loading, error, data }) => {
+                    console.log(data);
                     if (loading) return <LoadingWheel />;
                     if (error) return <p>Error!</p>;
-                    return <Items itemsData={data.items} />;
+                    return (
+                        <Items
+                            itemsData={data.items}
+                            itemFilters={this.props.itemFilters}
+                        />
+                    );
                 }}
             </Query>
         );
     }
 }
 
-export default ItemsContainer;
+export default connect(state => ({
+    itemFilters: state.itemsData.itemFilters
+}))(ItemsContainer);
 
 // ItemsContainer.propTypes = {
 //     itemsData: PropTypes.objectOf(

@@ -12,7 +12,7 @@ import { fetchProfileItemsFromUrl } from '../../redux/modules/profile';
 import ItemCard from '../../components/ItemCard';
 
 const profileQuery = gql`
-    query user($userId: String!) {
+    query user($userId: ID!) {
         user(id: $userId) {
             id
             email
@@ -59,7 +59,10 @@ class ProfileContainer extends Component {
                                 profileInfo={this.props.location.state}
                                 itemInfo={data.user.owneditems}
                             />
-                            <ItemCardList itemsData={data.user.owneditems} />
+                            <ItemCardList
+                                itemsData={data.user.owneditems}
+                                itemFilters={[]}
+                            />
                         </div>
                     );
                 }}

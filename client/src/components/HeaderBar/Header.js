@@ -46,7 +46,6 @@ class Header extends Component {
                 {({ loading, error, data }) => {
                     if (loading) return <p>loading</p>;
                     const tags = this.getTags(data.items);
-                    console.log(this.props.itemsData);
                     return (
                         <Paper className={'header-bar'}>
                             <div className={'home-filter-area'}>

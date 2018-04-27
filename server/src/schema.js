@@ -27,7 +27,20 @@ const typeDefs = `
     items: [Item]
     users: [User]
     item(id: ID!): Item
-    user(id: String!): User
+    user(id: ID!): User
+  }
+
+  type Mutation {
+    addItem(
+      title: String!
+      description: String!
+      imageurl: String!
+      itemowner: String!
+      tags: [String]
+      created: String!
+      available: Boolean!
+      borrower: String
+    ): Item
   }
 `;
 

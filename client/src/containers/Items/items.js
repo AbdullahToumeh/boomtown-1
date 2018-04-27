@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 
 import ItemCardList from '../../components/ItemCardList';
 
-const Items = props => <ItemCardList itemsData={props.itemsData} />;
+const Items = props => (
+    <ItemCardList itemsData={props.itemsData} itemFilters={props.itemFilters} />
+);
 
 export default Items;
 
