@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Masonry from 'react-masonry-component';
 
@@ -26,7 +26,15 @@ const ItemCardList = props => {
         >
             {props.itemFilters.length !== 0
                 ? props.itemFilters.map(filter => {
-                      props.itemsData.filter(item => console.log(item));
+                      const filteredItems = props.itemsData.filter(item =>
+                          item.tags.includes(filter)
+                      );
+                      console.log(filteredItems);
+                      return filteredItems.map((item, index) => (
+                          <li key={index} className={'grid-item'}>
+                              <ItemCard itemsData={item} />
+                          </li>
+                      ));
                   })
                 : props.itemsData.map((item, index) => (
                       <li key={index} className={'grid-item'}>
