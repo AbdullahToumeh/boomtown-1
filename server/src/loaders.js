@@ -1,5 +1,10 @@
 import DataLoader from 'dataloader';
-import { getUserOwnedItems, getBorrowedItems } from './jsonServer';
+import {
+    getUserOwnedItems,
+    getBorrowedItems,
+    getItem,
+    getUser
+} from './jsonServer';
 
 export default function() {
     return {
@@ -8,6 +13,12 @@ export default function() {
         ),
         BorrowedItems: new DataLoader(ids =>
             Promise.all(ids.map(id => getBorrowedItems(id)))
+        ),
+        SingleItem: new DataLoader(ids =>
+            Promise.all(ids.map(id => getItem(id)))
+        ),
+        SingleUser: new DataLoader(ids =>
+            Promise.all(ids.map(id => getUser(id)))
         )
     };
 }

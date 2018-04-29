@@ -1,5 +1,10 @@
 import fetch from 'node-fetch';
-import { getUserOwnedItems, getBorrowedItems } from './jsonServer';
+import {
+    getUserOwnedItems,
+    getBorrowedItems,
+    getItem,
+    getUser
+} from './jsonServer';
 
 const jsonApi = 'http://localhost:3001';
 
@@ -15,15 +20,11 @@ const resolveFunctions = {
                 .then(response => response.json())
                 .catch(err => console.log(err));
         },
-        item(root, { id }) {
-            return fetch(`${jsonApi}/items/${id}`)
-                .then(response => response.json())
-                .catch(err => console.log(err));
+        item(root, { id }, context) {
+            return context.loaders.SingleItem.load(id);
         },
-        user(root, { id }) {
-            return fetch(`${jsonApi}/users/${id}`)
-                .then(response => response.json())
-                .catch(err => console.log(err));
+        user(root, { id }, context) {
+            return context.loaders.SingleUser.load(id);
         }
     },
     Item: {
