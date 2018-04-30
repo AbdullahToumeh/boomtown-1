@@ -1,3 +1,3 @@
-import ItemsContainer from './itemsContainer';
+import ItemsContainer from './ItemsContainer';
 
 export default ItemsContainer;

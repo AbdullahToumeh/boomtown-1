@@ -6,7 +6,7 @@ import gql from 'graphql-tag';
 
 import LoadingWheel from '../../components/LoadingWheel';
 
-import Items from './items';
+import Items from './Items';
 
 import './style.css';
 
