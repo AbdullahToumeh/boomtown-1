@@ -15,7 +15,6 @@ const masonryOptions = {
 };
 
 const ItemCardList = props => {
-    console.log(props.itemFilters);
     return (
         <Masonry
             elementType={'ul'}
@@ -29,7 +28,6 @@ const ItemCardList = props => {
                       const filteredItems = props.itemsData.filter(item =>
                           item.tags.includes(filter)
                       );
-                      console.log(filteredItems);
                       return filteredItems.map((item, index) => (
                           <li key={index} className={'grid-item'}>
                               <ItemCard itemsData={item} />
@@ -48,5 +46,6 @@ const ItemCardList = props => {
 export default ItemCardList;
 
 ItemCardList.propTypes = {
-    itemsData: PropTypes.arrayOf(PropTypes.object).isRequired
+    itemsData: PropTypes.arrayOf(PropTypes.object).isRequired,
+    itemFilters: PropTypes.arrayOf(PropTypes.string).isRequired
 };

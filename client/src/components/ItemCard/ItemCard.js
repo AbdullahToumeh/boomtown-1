@@ -66,5 +66,3 @@ ItemCard.propTypes = {
         ])
     ).isRequired
 };
-
-// RE ADD TAGS BACK INTO THE CARD WITH item.tags.join()

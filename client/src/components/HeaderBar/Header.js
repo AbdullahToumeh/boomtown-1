@@ -45,6 +45,7 @@ class Header extends Component {
             <Query query={itemsQuery}>
                 {({ loading, error, data }) => {
                     if (loading) return <p>loading</p>;
+                    if (error) return <p>Error!</p>;
                     const tags = this.getTags(data.items);
                     return (
                         <Paper className={'header-bar'}>
@@ -82,20 +83,13 @@ class Header extends Component {
     }
 }
 
-// Header.defaultProps = {
-//     profileItems: []
-// };
-
-// Header.propTypes = {
-//     itemsData: PropTypes.objectOf(
-//         PropTypes.oneOfType([PropTypes.array, PropTypes.string, PropTypes.bool])
-//     ).isRequired,
-//     profileItems: PropTypes.arrayOf(PropTypes.object)
-// };
+Header.propTypes = {
+    itemsData: PropTypes.objectOf(
+        PropTypes.oneOfType([PropTypes.array, PropTypes.string, PropTypes.bool])
+    ).isRequired
+};
 
 export default connect(state => ({
     itemsData: state.itemsData,
     profileItems: state.profileItems.profileItems
 }))(Header);
-
-// export default Header;
