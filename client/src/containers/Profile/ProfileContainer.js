@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import { Query } from 'react-apollo';
@@ -46,7 +46,6 @@ const ProfileContainer = props => {
     return (
         <Query query={profileQuery} variables={{ userId }}>
             {({ loading, error, data }) => {
-                console.log(data);
                 if (loading) return <LoadingWheel />;
                 if (error) return <p>Error!</p>;
                 return (
@@ -66,29 +65,22 @@ const ProfileContainer = props => {
     );
 };
 
-// ProfileContainer.defaultProps = {
-//     match: {}
-// };
-
-// export default connect(state => ({
-//     itemsData: state.profileItems
-// }))(ProfileContainer);
+ProfileContainer.defaultProps = {
+    match: {},
+    location: {}
+};
 
 export default ProfileContainer;
 
-// ProfileContainer.propTypes = {
-//     itemsData: PropTypes.objectOf(
-//         PropTypes.oneOfType([PropTypes.array, PropTypes.bool, PropTypes.string])
-//     ).isRequired,
-//     location: PropTypes.objectOf(
-//         PropTypes.oneOfType([PropTypes.string, PropTypes.object])
-//     ).isRequired,
-//     dispatch: PropTypes.func.isRequired,
-//     match: PropTypes.objectOf(
-//         PropTypes.oneOfType([
-//             PropTypes.bool,
-//             PropTypes.object,
-//             PropTypes.string
-//         ])
-//     )
-// };
+ProfileContainer.propTypes = {
+    match: PropTypes.objectOf(
+        PropTypes.oneOfType([
+            PropTypes.bool,
+            PropTypes.object,
+            PropTypes.string
+        ])
+    ),
+    location: PropTypes.objectOf(
+        PropTypes.oneOfType([PropTypes.string, PropTypes.object])
+    )
+};
