@@ -11,6 +11,11 @@ export default function(app) {
     return {
         getItems() {
             return pool.query('SELECT * FROM items').then(res => res.rows);
+        },
+        getItem(id) {
+            return pool
+                .query(`SELECT * FROM items WHERE id=${id}`)
+                .then(res => res.rows[0]);
         }
     };
 }

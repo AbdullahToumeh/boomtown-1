@@ -31,7 +31,8 @@ export default function(app) {
             schema,
             context: {
                 loaders: createLoaders({
-                    jsonResources
+                    jsonResources,
+                    pgResources
                 })
             }
         })
