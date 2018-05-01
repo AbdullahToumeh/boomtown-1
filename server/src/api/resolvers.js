@@ -4,7 +4,7 @@ import {
     getBorrowedItems,
     getItem,
     getUser
-} from './jsonServer';
+} from './resources/jsonServer';
 
 const jsonApi = 'http://localhost:3001';
 
