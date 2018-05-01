@@ -6,19 +6,19 @@ import {
     getUser
 } from './resources/jsonServer';
 
-export default function() {
+export default function({ jsonResource }) {
     return {
         UserOwnedItems: new DataLoader(ids =>
-            Promise.all(ids.map(id => getUserOwnedItems(id)))
+            Promise.all(ids.map(id => jsonResource.getUserOwnedItems(id)))
         ),
         BorrowedItems: new DataLoader(ids =>
-            Promise.all(ids.map(id => getBorrowedItems(id)))
+            Promise.all(ids.map(id => jsonResource.getBorrowedItems(id)))
         ),
         SingleItem: new DataLoader(ids =>
-            Promise.all(ids.map(id => getItem(id)))
+            Promise.all(ids.map(id => jsonResource.getItem(id)))
         ),
         SingleUser: new DataLoader(ids =>
-            Promise.all(ids.map(id => getUser(id)))
+            Promise.all(ids.map(id => jsonResource.getUser(id)))
         )
     };
 }
