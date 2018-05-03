@@ -1,0 +1,8 @@
+.share-main {
+    display: flex;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
