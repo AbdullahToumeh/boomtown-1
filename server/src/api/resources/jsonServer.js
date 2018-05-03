@@ -40,7 +40,7 @@ export default function(app) {
             if (!json.id) return null;
             return json;
         },
-        getItemOwner() {
+        getItemOwner(itemowner) {
             return fetch(`${jsonApi}/users/${itemowner}`)
                 .then(response => response.json())
                 .catch(err => console.log(err));

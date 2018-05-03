@@ -3,7 +3,8 @@ import {
     getUserOwnedItems,
     getBorrowedItems,
     getItem,
-    getUser
+    getUser,
+    getItemOwner
 } from './resources/jsonServer';
 
 export default function({ jsonResources, pgResources }) {
@@ -19,6 +20,9 @@ export default function({ jsonResources, pgResources }) {
         ),
         SingleUser: new DataLoader(ids =>
             Promise.all(ids.map(id => jsonResources.getUser(id)))
+        ),
+        ItemOwner: new DataLoader(ids =>
+            Promise.all(ids.map(id => jsonResources.getItemOwner(id)))
         )
     };
 }

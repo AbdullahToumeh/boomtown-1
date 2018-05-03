@@ -12,7 +12,7 @@ export default function({ jsonResources, pgResources }) {
     return {
         Query: {
             items(root) {
-                return pgResources.getItems();
+                return jsonResources.getItems();
             },
             users(root) {
                 return jsonResources.getUsers();
@@ -28,8 +28,8 @@ export default function({ jsonResources, pgResources }) {
             async borrower({ borrower }) {
                 return jsonResources.getBorrower();
             },
-            itemowner({ itemowner }) {
-                return jsonResources.getItemOwner();
+            itemowner({ itemowner }, args, context) {
+                return context.loaders.ItemOwner.load(itemowner);
             }
         },
         User: {
