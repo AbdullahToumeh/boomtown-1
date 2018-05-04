@@ -42,7 +42,7 @@ export default function({ jsonResources, pgResources }) {
         },
         Mutation: {
             addItem(root, args) {
-                return jsonResources.addItem(args);
+                return pgResources.addItem(args);
             }
         }
     };

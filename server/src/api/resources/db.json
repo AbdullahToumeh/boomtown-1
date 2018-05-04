@@ -293,8 +293,11 @@
       "title": "cat",
       "description": "cat",
       "imageurl": "C:\\fakepath\\cat.png",
+      "tags": [
+        "1"
+      ],
       "itemowner": "eEvh1WUF5nb5eeUksUQb3Ph0kOU2",
-      "created": "2018-05-04T17:00:03.491Z",
+      "created": "2018-05-04T20:42:50.946Z",
       "available": true,
       "id": 23
     }

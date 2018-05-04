@@ -25,7 +25,7 @@ const addItemMutation = gql`
         $title: String!
         $description: String!
         $imageurl: String!
-        $tags: [String!]
+        $tags: [String]!
         $created: String!
         $available: Boolean!
         $itemowner: String!
@@ -61,9 +61,20 @@ const fakeItemData = {
     description: 'test'
 };
 
+const tags = [
+    { tagid: 1, tag: 'Household Items' },
+    { tagid: 2, tag: 'Recreational Equipment' },
+    { tagid: 3, tag: 'Musical Instruments' },
+    { tagid: 4, tag: 'Physical Media' },
+    { tagid: 5, tag: 'Tools' },
+    { tagid: 6, tag: 'Sporting Goods' },
+    { tagid: 7, tag: 'Electronics' }
+];
+
 export default class Share extends Component {
     state = {
-        stepIndex: 0
+        stepIndex: 0,
+        selectedTags: []
     };
 
     handleNext = () => {
@@ -79,6 +90,16 @@ export default class Share extends Component {
             this.setState({ stepIndex: stepIndex - 1 });
         }
     };
+
+    handleFilter(tag) {
+        const { selectedTags } = this.state;
+        if (selectedTags.indexOf(tag) > -1) {
+            selectedTags.splice(selectedTags.indexOf(tag), 1);
+            this.setState({ selectedTags: [...selectedTags] });
+        } else {
+            this.setState({ selectedTags: [...selectedTags, tag] });
+        }
+    }
 
     renderStepActions(step) {
         return (
@@ -143,6 +164,9 @@ export default class Share extends Component {
                                                 ...values,
                                                 created: new Date(),
                                                 available: true,
+                                                tags: this.state.selectedTags.map(
+                                                    tag => tag.tagid.toString()
+                                                ),
                                                 itemowner:
                                                     'eEvh1WUF5nb5eeUksUQb3Ph0kOU2'
                                             }
@@ -316,42 +340,41 @@ export default class Share extends Component {
                                                                 value="tags"
                                                                 hintText="Select Category Tags"
                                                                 className="select-area"
+                                                                {...input}
+                                                                onChange={(
+                                                                    event,
+                                                                    index,
+                                                                    value
+                                                                ) =>
+                                                                    this.handleFilter(
+                                                                        value[0]
+                                                                    )
+                                                                }
                                                             >
-                                                                <MenuItem
-                                                                    key="1"
-                                                                    insetChildren
-                                                                    checked
-                                                                    value="1"
-                                                                    primaryText="Household Items"
-                                                                />
-                                                                <MenuItem
-                                                                    key="2"
-                                                                    insetChildren
-                                                                    checked
-                                                                    value="1"
-                                                                    primaryText="Recreational Equipment"
-                                                                />
-                                                                <MenuItem
-                                                                    key="3"
-                                                                    insetChildren
-                                                                    checked
-                                                                    value="1"
-                                                                    primaryText="Tools"
-                                                                />
-                                                                <MenuItem
-                                                                    key="4"
-                                                                    insetChildren
-                                                                    checked
-                                                                    value="1"
-                                                                    primaryText="Phyical Media"
-                                                                />
-                                                                <MenuItem
-                                                                    key="5"
-                                                                    insetChildren
-                                                                    checked
-                                                                    value="1"
-                                                                    primaryText="Sports"
-                                                                />
+                                                                {tags.map(
+                                                                    tag => {
+                                                                        return (
+                                                                            <MenuItem
+                                                                                insetChildren
+                                                                                key={
+                                                                                    tag.tagid
+                                                                                }
+                                                                                value={
+                                                                                    tag
+                                                                                }
+                                                                                primaryText={
+                                                                                    tag.tag
+                                                                                }
+                                                                                checked={
+                                                                                    this.state.selectedTags.indexOf(
+                                                                                        tag
+                                                                                    ) >
+                                                                                    -1
+                                                                                }
+                                                                            />
+                                                                        );
+                                                                    }
+                                                                )}
                                                             </SelectField>
                                                         );
                                                     }}
