@@ -8,27 +8,17 @@ import createResolvers from './resolvers';
 
 import initPostgres from './resources/postgres';
 import initJson from './resources/jsonServer';
-
-import * as firebase from 'firebase';
+import initFirebase from './resources/firebase';
 
 export default function(app) {
-    // Initialize Firebase
-    var config = {
-        apiKey: 'AIzaSyBudbYt5QamAB7mAY3rvufK_SlXewLc00Q',
-        authDomain: 'boomtown-e0104.firebaseapp.com',
-        databaseURL: 'https://boomtown-e0104.firebaseio.com',
-        projectId: 'boomtown-e0104',
-        storageBucket: '',
-        messagingSenderId: '611356202136'
-    };
-    firebase.initializeApp(config);
-
     const jsonResources = initJson(app);
     const pgResources = initPostgres(app);
+    const fbResources = initFirebase(app);
 
     const resolvers = createResolvers({
         jsonResources,
-        pgResources
+        pgResources,
+        fbResources
     });
 
     const schema = makeExecutableSchema({

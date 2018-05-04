@@ -8,14 +8,14 @@ import {
 
 const jsonApi = 'http://localhost:3001';
 
-export default function({ jsonResources, pgResources }) {
+export default function({ jsonResources, pgResources, fbResources }) {
     return {
         Query: {
             items(root) {
                 return jsonResources.getItems();
             },
             users(root) {
-                return jsonResources.getUsers();
+                return fbResources.getUsers();
             },
             item(root, { id }, context) {
                 return context.loaders.SingleItem.load(id);
