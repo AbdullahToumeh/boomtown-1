@@ -7,6 +7,14 @@ import MenuItem from 'material-ui/MenuItem';
 import { Step, Stepper, StepButton, StepContent } from 'material-ui/Stepper';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
+import TextField from 'material-ui/TextField';
+import { grey900 } from 'material-ui/styles/colors';
+
+const styles = {
+    underlineStyle: {
+        color: grey900
+    }
+};
 
 export default class Share extends Component {
     state = {
@@ -99,7 +107,10 @@ export default class Share extends Component {
                                         Add an Image
                                     </StepButton>
                                     <StepContent>
-                                        <label>Upload an Image</label>
+                                        <label for="name">
+                                            We live in a visual culture. Upload
+                                            an image of the item you're sharing.
+                                        </label>
                                         <Field
                                             name="image"
                                             validate={this.required.bind(this)}
@@ -134,7 +145,11 @@ export default class Share extends Component {
                                         Add a Title & Description
                                     </StepButton>
                                     <StepContent>
-                                        <label>Title</label>
+                                        <p className="stepper-title">
+                                            Folks need to know what you're
+                                            sharing. Give them a clue by adding
+                                            a title & description.
+                                        </p>
                                         <Field
                                             name="title"
                                             validate={this.required.bind(this)}
@@ -147,16 +162,23 @@ export default class Share extends Component {
                                                         </span>
                                                     );
                                                 return (
-                                                    <input
-                                                        type="text"
+                                                    <TextField
+                                                        floatingLabelText="Title"
+                                                        floatingLabelFixed={
+                                                            true
+                                                        }
                                                         required
                                                         {...input}
+                                                        hintText="Title"
+                                                        fullWidth={true}
+                                                        underlineFocusStyle={
+                                                            styles.underlineStyle
+                                                        }
                                                     />
                                                 );
                                             }}
                                         </Field>
 
-                                        <label>Description</label>
                                         <Field
                                             name="description"
                                             validate={this.required.bind(this)}
@@ -169,10 +191,18 @@ export default class Share extends Component {
                                                         </span>
                                                     );
                                                 return (
-                                                    <input
-                                                        type="textarea"
+                                                    <TextField
                                                         required
                                                         {...input}
+                                                        floatingLabelText="Description"
+                                                        floatingLabelFixed={
+                                                            true
+                                                        }
+                                                        fullWidth={true}
+                                                        hintText="Description"
+                                                        multiLine={true}
+                                                        rows={4}
+                                                        className="input-field"
                                                     />
                                                 );
                                             }}
@@ -190,7 +220,11 @@ export default class Share extends Component {
                                         Categorize your Item
                                     </StepButton>
                                     <StepContent>
-                                        <label>Select some Tags</label>
+                                        <label for="tags">
+                                            To share an item, you'll add it to
+                                            our list of categories. You can
+                                            select multiple categories.
+                                        </label>
                                         <Field
                                             name="tags"
                                             validate={this.required.bind(this)}
@@ -207,6 +241,7 @@ export default class Share extends Component {
                                                         multiple
                                                         value="tags"
                                                         hintText="Select Category Tags"
+                                                        className="select-area"
                                                     >
                                                         <MenuItem
                                                             key="1"
@@ -260,6 +295,10 @@ export default class Share extends Component {
                                         Confirm Things!
                                     </StepButton>
                                     <StepContent>
+                                        <label>
+                                            Great! If you're happy with
+                                            everything, tap the button.
+                                        </label>
                                         <button type="submit">Submit</button>
                                         {this.renderStepActions(3)}
                                     </StepContent>

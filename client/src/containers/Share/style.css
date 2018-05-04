@@ -1,8 +1,28 @@
 .share-main {
     display: flex;
+    width: 1000px;
+    margin: 0 auto;
+}
+
+.preview-item {
+    width: 400px;
+}
+
+label {
+    color: white;
 }
 
 form {
-    display: flex;
-    flex-direction: column;
+    width: 600px;
+}
+
+.stepper-title {
+    color: white;
+    margin: 0;
+    text-align: left;
+    line-height: 1;
+}
+
+.select-area {
+    display: block !important;
 }
