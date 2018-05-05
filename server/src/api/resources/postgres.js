@@ -10,7 +10,25 @@ export default function(app) {
 
     return {
         getItems() {
-            return pool.query('SELECT * FROM items').then(res => res.rows);
+            return pool
+                .query(
+                    `SELECT items.id,
+                    items.title,
+                    items.imageurl,
+                    items.description,
+                    items.borrower,
+                    items.created,
+                    items.itemowner,
+                    array_agg(tags.tag) AS tags
+                        FROM items 
+                        RIGHT OUTER JOIN itemtags
+                            ON itemtags.itemid = items.id
+                        INNER JOIN tags 
+                            ON tags.tagid = itemtags.tagid
+                        GROUP BY items.id
+                `
+                )
+                .then(res => res.rows);
         },
         getItem(id) {
             return pool

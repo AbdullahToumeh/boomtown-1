@@ -16,6 +16,19 @@ import muiTheme from './config/theme';
 import Layout from './components/Layout';
 import Routes from './routes';
 
+import * as firebase from 'firebase';
+
+//HAVE AN ISLOGGEDIN? VARIABLE IN OUR REDUX STORE THAT CHANGES DEPENDING ON IF AN AUTHENTICATION TOKEN IS AVAILABLE --  NEED TO WRITE AN AUTH REDUCER
+// FirebaseAuth.onAuthStateChanged(user => {
+//     if (user) {
+//         console.log('You have logged in!');
+//         // store.dispatch(updateAuthState(user))
+//     } else {
+//         console.log('You have logged out!');
+//         store.dispatch(updateAuthState(false));
+//     }
+// });
+
 const Boomtown = () => (
     <MuiThemeProvider muiTheme={muiTheme}>
         <ApolloProvider client={client}>

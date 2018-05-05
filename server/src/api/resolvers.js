@@ -12,7 +12,7 @@ export default function({ jsonResources, pgResources, fbResources }) {
     return {
         Query: {
             items(root) {
-                return jsonResources.getItems();
+                return pgResources.getItems();
             },
             users(root) {
                 return fbResources.getUsers();
