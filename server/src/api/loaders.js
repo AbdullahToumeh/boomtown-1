@@ -7,22 +7,22 @@ import {
     getItemOwner
 } from './resources/jsonServer';
 
-export default function({ jsonResources, pgResources }) {
+export default function({ jsonResources, pgResources, fbResources }) {
     return {
         UserOwnedItems: new DataLoader(ids =>
-            Promise.all(ids.map(id => jsonResources.getUserOwnedItems(id)))
+            Promise.all(ids.map(id => pgResources.getUserOwnedItems(id)))
         ),
         BorrowedItems: new DataLoader(ids =>
-            Promise.all(ids.map(id => jsonResources.getBorrowedItems(id)))
+            Promise.all(ids.map(id => pgResources.getBorrowedItems(id)))
         ),
         SingleItem: new DataLoader(ids =>
             Promise.all(ids.map(id => pgResources.getItem(id)))
         ),
         SingleUser: new DataLoader(ids =>
-            Promise.all(ids.map(id => jsonResources.getUser(id)))
+            Promise.all(ids.map(id => fbResources.getUser(id)))
         ),
         ItemOwner: new DataLoader(ids =>
-            Promise.all(ids.map(id => jsonResources.getItemOwner(id)))
+            Promise.all(ids.map(id => fbResources.getUser(id)))
         )
     };
 }

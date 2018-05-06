@@ -35,6 +35,48 @@ export default function(app) {
                 .query(`SELECT * FROM items WHERE id=${id}`)
                 .then(res => res.rows[0]);
         },
+        getUserOwnedItems(id) {
+            return pool
+                .query(
+                    `SELECT items.id,
+                            items.title,
+                            items.imageurl,
+                            items.description,
+                            items.borrower,
+                            items.created,
+                            items.itemowner,
+                            array_agg(tags.tag) AS tags
+                    FROM items 
+                    RIGHT OUTER JOIN itemtags
+                        ON itemtags.itemid = items.id
+                    INNER JOIN tags 
+                        ON tags.tagid = itemtags.tagid
+                    WHERE itemowner='${id}'
+                    GROUP BY items.id`
+                )
+                .then(res => res.rows);
+        },
+        getBorrowedItems(id) {
+            return pool
+                .query(
+                    `SELECT items.id,
+                                items.title,
+                                items.imageurl,
+                                items.description,
+                                items.borrower,
+                                items.created,
+                                items.itemowner,
+                                array_agg(tags.tag) AS tags
+                        FROM items 
+                        RIGHT OUTER JOIN itemtags
+                            ON itemtags.itemid = items.id
+                        INNER JOIN tags 
+                            ON tags.tagid = itemtags.tagid
+                        WHERE borrower='${id}'
+                        GROUP BY items.id`
+                )
+                .then(res => res.rows);
+        },
         addItem(args) {
             return pool.connect((err, client, done) => {
                 const shouldAbort = err => {

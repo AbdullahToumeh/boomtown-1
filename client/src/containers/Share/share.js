@@ -74,7 +74,20 @@ const tags = [
 export default class Share extends Component {
     state = {
         stepIndex: 0,
-        selectedTags: []
+        selectedTags: [],
+        itemCardData: {
+            imageurl: '',
+            title: '',
+            itemowner: {
+                id: 1,
+                bio: '',
+                fullname: '',
+                email: ''
+            },
+            created: new Date(),
+            tags: [],
+            description: ''
+        }
     };
 
     handleNext = () => {
