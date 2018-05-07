@@ -10,17 +10,10 @@ import { Step, Stepper, StepButton, StepContent } from 'material-ui/Stepper';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
-import { grey900 } from 'material-ui/styles/colors';
 
 import placeHolder from '../../images/item-placeholder.jpg';
 import ItemCard from '../../components/ItemCard';
 import LoadingProgress from './LoadingProgress';
-
-const styles = {
-    underlineStyle: {
-        color: grey900
-    }
-};
 
 const addItemMutation = gql`
     mutation addItem(
@@ -81,29 +74,15 @@ export default class Share extends Component {
             },
             created: new Date(),
             tags: [],
-            description: 'cat'
+            description: 'Description'
         },
         finished: false,
         value: ''
     };
 
-    handleUpdateCard = event => {
-        const currentDescription = this.state.itemCardData.description;
-        this.setState({
-            itemCardData: {
-                description: currentDescription,
-                [event.target.name]: event.target.value,
-                itemowner: {
-                    id: 'UQ9tSckgoEYplNYDdlWafJOHrw52',
-                    fullname: 'Current User',
-                    email: ''
-                },
-                created: new Date(),
-                tags: [],
-                imageurl: placeHolder
-            }
-        });
-    };
+    onSubmit(values) {
+        console.log('Form was submitted', values);
+    }
 
     handleDescription = event => {
         this.setState({
@@ -123,7 +102,7 @@ export default class Share extends Component {
     };
 
     handleTags = event => {
-        console.log(event.target.value);
+        // console.log(event.target.value);
     };
 
     handleNext = () => {
@@ -182,6 +161,35 @@ export default class Share extends Component {
         }
     }
 
+    handleUpdateCard = event => {
+        const currentDescription = this.state.itemCardData.description;
+        this.setState({
+            itemCardData: {
+                description: currentDescription,
+                [event.target.name]: event.target.value,
+                itemowner: {
+                    id: 'UQ9tSckgoEYplNYDdlWafJOHrw52',
+                    fullname: 'Current User',
+                    email: ''
+                },
+                created: new Date(),
+                tags: [],
+                imageurl: placeHolder
+            }
+        });
+    };
+
+    validate(...args) {
+        // console.log('Validating:', args);
+    }
+
+    required(value) {
+        // if (value && value.length > 0) {
+        //     return this.setState({ finished: true });
+        // }
+        return value ? undefined : 'Required';
+    }
+
     renderStepActions(step) {
         return (
             <div style={{ margin: '12px 0' }}>
@@ -206,21 +214,6 @@ export default class Share extends Component {
         );
     }
 
-    onSubmit(values) {
-        console.log('Form was submitted', values);
-    }
-
-    validate(...args) {
-        console.log('Validating:', args);
-    }
-
-    required(value) {
-        // if (value && value.length > 0) {
-        //     return this.setState({ finished: true });
-        // }
-        return value ? undefined : 'Required';
-    }
-
     render() {
         const { stepIndex } = this.state;
         return (
@@ -231,13 +224,7 @@ export default class Share extends Component {
                 <Form
                     onSubmit={values => this.onSubmit(values)}
                     validate={this.validate.bind(this)}
-                    render={({
-                        handleSubmit,
-                        reset,
-                        submitting,
-                        pristine,
-                        values
-                    }) => (
+                    render={({ handleSubmit, values }) => (
                         <Mutation mutation={addItemMutation}>
                             {(addItem, { data }) => (
                                 <form
@@ -274,7 +261,7 @@ export default class Share extends Component {
                                                 Add an Image
                                             </StepButton>
                                             <StepContent>
-                                                <label for="name">
+                                                <label htmlFor="imageurl">
                                                     We live in a visual culture.
                                                     Upload an image of the item
                                                     you're sharing.
@@ -350,14 +337,12 @@ export default class Share extends Component {
                                                         return (
                                                             <TextField
                                                                 floatingLabelText="Title"
-                                                                floatingLabelFixed={
-                                                                    true
-                                                                }
+                                                                floatingLabelFixed
                                                                 required
                                                                 {...input}
                                                                 type="text"
                                                                 hintText="Title"
-                                                                fullWidth={true}
+                                                                fullWidth
                                                                 // underlineFocusStyle={
                                                                 //     styles.underlineStyle
                                                                 // }
@@ -388,12 +373,10 @@ export default class Share extends Component {
                                                                 required
                                                                 {...input}
                                                                 floatingLabelText="Description"
-                                                                floatingLabelFixed={
-                                                                    true
-                                                                }
-                                                                fullWidth={true}
+                                                                floatingLabelFixed
+                                                                fullWidth
                                                                 hintText="Description"
-                                                                multiLine={true}
+                                                                multiLine
                                                                 rows={4}
                                                                 className="input-field"
                                                                 onInput={

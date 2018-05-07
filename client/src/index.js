@@ -16,12 +16,12 @@ import muiTheme from './config/theme';
 import Layout from './components/Layout';
 import Routes from './routes';
 
-import { FirebaseAuth, updateAuthState, firebase } from 'firebase';
+import { FirebaseAuth, updateAuthState } from 'firebase';
 
-import { auth } from './firebase/firebase';
+import { auth, firebase } from './firebase/';
 
 // HAVE AN ISLOGGEDIN? VARIABLE IN OUR REDUX STORE THAT CHANGES DEPENDING ON IF AN AUTHENTICATION TOKEN IS AVAILABLE --  NEED TO WRITE AN AUTH REDUCER
-// auth.onAuthStateChanged(user => {
+// firebase.auth().onAuthStateChanged(user => {
 //     if (user) {
 //         const email = user.email;
 //         const name = user.fullname;

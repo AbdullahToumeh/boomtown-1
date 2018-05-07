@@ -22,6 +22,10 @@ const itemsQuery = gql`
 `;
 
 class Header extends Component {
+    state = {
+        windowLocation: window.location.href
+    };
+
     getTags = items => {
         const tags = [];
         if (items.length && items[0] !== undefined) {
@@ -57,7 +61,9 @@ class Header extends Component {
                                         className={'home-logo'}
                                     />
                                 </Link>
-                                {!window.location.href.includes('/profile') &&
+                                {!this.state.windowLocation.includes(
+                                    '/profile'
+                                ) &&
                                     tags.length && (
                                         <TagFilterField
                                             tags={tags}
@@ -90,6 +96,5 @@ Header.propTypes = {
 };
 
 export default connect(state => ({
-    itemsData: state.itemsData,
-    profileItems: state.profileItems.profileItems
+    itemsData: state.itemsData
 }))(Header);
