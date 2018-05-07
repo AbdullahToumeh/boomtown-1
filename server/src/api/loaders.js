@@ -7,7 +7,7 @@ import {
     getItemOwner
 } from './resources/jsonServer';
 
-export default function({ jsonResources, pgResources, fbResources }) {
+export default function({ pgResources, fbResources }) {
     return {
         UserOwnedItems: new DataLoader(ids =>
             Promise.all(ids.map(id => pgResources.getUserOwnedItems(id)))

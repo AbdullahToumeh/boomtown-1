@@ -13,6 +13,7 @@ import TextField from 'material-ui/TextField';
 import { grey900 } from 'material-ui/styles/colors';
 
 import ItemCard from '../../components/ItemCard';
+import LoadingProgress from './LoadingProgress';
 
 const styles = {
     underlineStyle: {
@@ -72,28 +73,65 @@ const tags = [
 ];
 
 export default class Share extends Component {
+    constructor(props) {
+        super(props);
+        this.handleUpdateCard = this.handleUpdateCard.bind(this);
+        this.handleDescription = this.handleDescription.bind(this);
+    }
     state = {
         stepIndex: 0,
         selectedTags: [],
         itemCardData: {
             imageurl: '',
-            title: '',
+            title: 'Title',
             itemowner: {
-                id: 1,
+                id: 'UQ9tSckgoEYplNYDdlWafJOHrw52',
                 bio: '',
                 fullname: '',
                 email: ''
             },
             created: new Date(),
             tags: [],
-            description: ''
-        }
+            description: 'cat'
+        },
+        finished: false,
+        value: ''
+    };
+
+    handleUpdateCard = event => {
+        console.log(this.state);
+        const currentDescription = this.state.description;
+        this.setState({
+            itemCardData: {
+                description: currentDescription,
+                [event.target.name]: event.target.value,
+                itemowner: { id: 'UQ9tSckgoEYplNYDdlWafJOHrw52' },
+                created: new Date(),
+                tags: []
+            }
+        });
+    };
+
+    handleDescription = event => {
+        console.log(this.state);
+        this.setState({
+            itemCardData: {
+                title: this.state.title,
+                [event.target.name]: event.target.value,
+                itemowner: { id: 'UQ9tSckgoEYplNYDdlWafJOHrw52' },
+                created: new Date(),
+                tags: []
+            }
+        });
     };
 
     handleNext = () => {
         const { stepIndex } = this.state;
         if (stepIndex < 3) {
-            this.setState({ stepIndex: stepIndex + 1 });
+            this.setState({
+                stepIndex: stepIndex + 1,
+                finished: stepIndex >= 2
+            });
         }
     };
 
@@ -122,6 +160,7 @@ export default class Share extends Component {
                     disableTouchRipple={true}
                     disableFocusRipple={true}
                     primary={true}
+                    disabled={!this.state.finished}
                     onClick={this.handleNext}
                     style={{ marginRight: 12 }}
                 />
@@ -146,6 +185,9 @@ export default class Share extends Component {
     }
 
     required(value) {
+        // if (value && value.length > 0) {
+        //     return this.setState({ finished: true });
+        // }
         return value ? undefined : 'Required';
     }
 
@@ -154,7 +196,7 @@ export default class Share extends Component {
         return (
             <div className="share-main">
                 <div className="preview-item">
-                    <ItemCard itemsData={fakeItemData} />
+                    <ItemCard itemsData={this.state.itemCardData} />
                 </div>
                 <Form
                     onSubmit={values => this.onSubmit(values)}
@@ -209,6 +251,7 @@ export default class Share extends Component {
                                                 </label>
                                                 <Field
                                                     name="imageurl"
+                                                    type="file"
                                                     validate={this.required.bind(
                                                         this
                                                     )}
@@ -221,12 +264,22 @@ export default class Share extends Component {
                                                                 </span>
                                                             );
                                                         return (
-                                                            <input
-                                                                type="file"
-                                                                accept="image/*"
-                                                                {...input}
-                                                                required
-                                                            />
+                                                            <RaisedButton
+                                                                label="Select an image"
+                                                                containerElement="label"
+                                                                labelPosition="before"
+                                                            >
+                                                                <input
+                                                                    type="file"
+                                                                    accept="image/*"
+                                                                    {...input}
+                                                                    required
+                                                                    style={{
+                                                                        display:
+                                                                            'none'
+                                                                    }}
+                                                                />
+                                                            </RaisedButton>
                                                         );
                                                     }}
                                                 </Field>
@@ -264,7 +317,6 @@ export default class Share extends Component {
                                                                     {meta.error}
                                                                 </span>
                                                             );
-                                                        console.log(input);
                                                         return (
                                                             <TextField
                                                                 floatingLabelText="Title"
@@ -273,10 +325,15 @@ export default class Share extends Component {
                                                                 }
                                                                 required
                                                                 {...input}
+                                                                type="text"
                                                                 hintText="Title"
                                                                 fullWidth={true}
-                                                                underlineFocusStyle={
-                                                                    styles.underlineStyle
+                                                                // underlineFocusStyle={
+                                                                //     styles.underlineStyle
+                                                                // }
+                                                                onInput={
+                                                                    this
+                                                                        .handleUpdateCard
                                                                 }
                                                             />
                                                         );
@@ -309,6 +366,10 @@ export default class Share extends Component {
                                                                 multiLine={true}
                                                                 rows={4}
                                                                 className="input-field"
+                                                                onInput={
+                                                                    this
+                                                                        .handleDescription
+                                                                }
                                                             />
                                                         );
                                                     }}

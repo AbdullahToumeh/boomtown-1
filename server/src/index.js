@@ -4,6 +4,7 @@ import { Pool } from 'pg';
 
 import initConfigs from './configs';
 import initAPI from './api';
+import initAuth from './auth';
 
 const app = express();
 const port = 3333;
@@ -13,6 +14,8 @@ initConfigs(app);
 app.use('*', cors());
 
 initAPI(app);
+
+initAuth(app);
 
 app.listen(
     port,
