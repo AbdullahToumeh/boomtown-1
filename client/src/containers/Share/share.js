@@ -12,6 +12,7 @@ import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
 import { grey900 } from 'material-ui/styles/colors';
 
+import placeHolder from '../../images/item-placeholder.jpg';
 import ItemCard from '../../components/ItemCard';
 import LoadingProgress from './LoadingProgress';
 
@@ -82,7 +83,7 @@ export default class Share extends Component {
         stepIndex: 0,
         selectedTags: [],
         itemCardData: {
-            imageurl: '',
+            imageurl: placeHolder,
             title: 'Title',
             itemowner: {
                 id: 'UQ9tSckgoEYplNYDdlWafJOHrw52',
@@ -100,14 +101,15 @@ export default class Share extends Component {
 
     handleUpdateCard = event => {
         console.log(this.state);
-        const currentDescription = this.state.description;
+        const currentDescription = this.state.itemCardData.description;
         this.setState({
             itemCardData: {
                 description: currentDescription,
                 [event.target.name]: event.target.value,
-                itemowner: { id: 'UQ9tSckgoEYplNYDdlWafJOHrw52' },
+                itemowner: { id: 'UQ9tSckgoEYplNYDdlWafJOHrw52', email: '' },
                 created: new Date(),
-                tags: []
+                tags: [],
+                imageurl: placeHolder
             }
         });
     };
@@ -116,11 +118,12 @@ export default class Share extends Component {
         console.log(this.state);
         this.setState({
             itemCardData: {
-                title: this.state.title,
+                title: this.state.itemCardData.title,
                 [event.target.name]: event.target.value,
-                itemowner: { id: 'UQ9tSckgoEYplNYDdlWafJOHrw52' },
+                itemowner: { id: 'UQ9tSckgoEYplNYDdlWafJOHrw52', email: '' },
                 created: new Date(),
-                tags: []
+                tags: [],
+                imageurl: placeHolder
             }
         });
     };
