@@ -49,20 +49,6 @@ const addItemMutation = gql`
     }
 `;
 
-const fakeItemData = {
-    imageurl: '',
-    title: 'Test',
-    itemowner: {
-        id: 1,
-        bio: '',
-        fullname: 'Tester',
-        email: ''
-    },
-    created: new Date(),
-    tags: ['tag1'],
-    description: 'test'
-};
-
 const tags = [
     { tagid: 1, tag: 'Household Items' },
     { tagid: 2, tag: 'Recreational Equipment' },
@@ -78,6 +64,8 @@ export default class Share extends Component {
         super(props);
         this.handleUpdateCard = this.handleUpdateCard.bind(this);
         this.handleDescription = this.handleDescription.bind(this);
+        this.handleFilter = this.handleFilter.bind(this);
+        this.handleTags = this.handleTags.bind(this);
     }
     state = {
         stepIndex: 0,
@@ -88,7 +76,7 @@ export default class Share extends Component {
             itemowner: {
                 id: 'UQ9tSckgoEYplNYDdlWafJOHrw52',
                 bio: '',
-                fullname: '',
+                fullname: 'Current User',
                 email: ''
             },
             created: new Date(),
@@ -100,13 +88,16 @@ export default class Share extends Component {
     };
 
     handleUpdateCard = event => {
-        console.log(this.state);
         const currentDescription = this.state.itemCardData.description;
         this.setState({
             itemCardData: {
                 description: currentDescription,
                 [event.target.name]: event.target.value,
-                itemowner: { id: 'UQ9tSckgoEYplNYDdlWafJOHrw52', email: '' },
+                itemowner: {
+                    id: 'UQ9tSckgoEYplNYDdlWafJOHrw52',
+                    fullname: 'Current User',
+                    email: ''
+                },
                 created: new Date(),
                 tags: [],
                 imageurl: placeHolder
@@ -115,17 +106,24 @@ export default class Share extends Component {
     };
 
     handleDescription = event => {
-        console.log(this.state);
         this.setState({
             itemCardData: {
                 title: this.state.itemCardData.title,
                 [event.target.name]: event.target.value,
-                itemowner: { id: 'UQ9tSckgoEYplNYDdlWafJOHrw52', email: '' },
+                itemowner: {
+                    id: 'UQ9tSckgoEYplNYDdlWafJOHrw52',
+                    fullname: 'Current User',
+                    email: ''
+                },
                 created: new Date(),
                 tags: [],
                 imageurl: placeHolder
             }
         });
+    };
+
+    handleTags = event => {
+        console.log(event.target.value);
     };
 
     handleNext = () => {
@@ -147,11 +145,40 @@ export default class Share extends Component {
 
     handleFilter(tag) {
         const { selectedTags } = this.state;
+        console.log(tag.tag);
         if (selectedTags.indexOf(tag) > -1) {
             selectedTags.splice(selectedTags.indexOf(tag), 1);
-            this.setState({ selectedTags: [...selectedTags] });
+            this.setState({
+                selectedTags: [...selectedTags],
+                itemCardData: {
+                    tags: [...selectedTags, tag.tag],
+                    itemowner: {
+                        id: 'UQ9tSckgoEYplNYDdlWafJOHrw52',
+                        fullname: 'Current User',
+                        email: ''
+                    },
+                    title: this.state.itemCardData.title,
+                    description: this.state.itemCardData.description,
+                    created: new Date(),
+                    imageurl: placeHolder
+                }
+            });
         } else {
-            this.setState({ selectedTags: [...selectedTags, tag] });
+            this.setState({
+                selectedTags: [...selectedTags, tag],
+                itemCardData: {
+                    tags: [...selectedTags, tag.tag],
+                    itemowner: {
+                        id: 'UQ9tSckgoEYplNYDdlWafJOHrw52',
+                        fullname: 'Current User',
+                        email: ''
+                    },
+                    title: this.state.itemCardData.title,
+                    description: this.state.itemCardData.description,
+                    created: new Date(),
+                    imageurl: placeHolder
+                }
+            });
         }
     }
 
