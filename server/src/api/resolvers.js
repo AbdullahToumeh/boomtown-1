@@ -25,8 +25,10 @@ export default function({ jsonResources, pgResources, fbResources }) {
             }
         },
         Item: {
-            async borrower({ borrower }) {
-                return jsonResources.getBorrower();
+            async borrower({ borrower }, args, context) {
+                if (borrower !== null) {
+                    return context.loaders.ItemOwner.load(borrower);
+                }
             },
             itemowner({ itemowner }, args, context) {
                 return context.loaders.ItemOwner.load(itemowner);
