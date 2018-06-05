@@ -76,7 +76,10 @@ class Header extends Component {
                 <RaisedButton
                   label="Logout"
                   secondary
-                  onClick={() => auth.signOut()}
+                  onClick={() => {
+                    auth.signOut();
+                    window.location.reload();
+                  }}
                 />
               </div>
             </Paper>
