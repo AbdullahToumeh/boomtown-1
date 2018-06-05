@@ -14,6 +14,7 @@ import TextField from 'material-ui/TextField';
 import placeHolder from '../../images/item-placeholder.jpg';
 import ItemCard from '../../components/ItemCard';
 import LoadingProgress from './LoadingProgress';
+import { itemsQuery } from '../Items/ItemsContainer';
 
 const addItemMutation = gql`
   mutation addItem(
@@ -236,7 +237,16 @@ export default class Share extends Component {
           onSubmit={values => this.onSubmit(values)}
           validate={this.validate.bind(this)}
           render={({ handleSubmit, values }) => (
-            <Mutation mutation={addItemMutation}>
+            <Mutation
+              mutation={addItemMutation}
+              update={(cache, { data }) => {
+                const { items } = cache.readQuery({ query: itemsQuery });
+                cache.writeQuery({
+                  query: itemsQuery,
+                  data: { items: items.concat([addItemMutation]) }
+                });
+              }}
+            >
               {(addItem, { data }) => (
                 <form
                   onSubmit={e => {
