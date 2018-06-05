@@ -46,7 +46,6 @@ class Header extends Component {
   };
 
   render() {
-    console.log(auth.currentUser);
     return (
       <Query query={itemsQuery}>
         {({ loading, error, data }) => {
@@ -68,11 +67,13 @@ class Header extends Component {
                   )}
               </div>
               <div>
-                <RaisedButton
-                  label="My Profile"
-                  className={'my-profile-button'}
-                  primary
-                />
+                <Link to={`/profile/${auth.currentUser.uid}`}>
+                  <RaisedButton
+                    label="My Profile"
+                    className={'my-profile-button'}
+                    primary
+                  />
+                </Link>
                 <RaisedButton
                   label="Logout"
                   secondary

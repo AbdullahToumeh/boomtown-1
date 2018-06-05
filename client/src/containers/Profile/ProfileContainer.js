@@ -9,78 +9,68 @@ import Profile from './Profile';
 import ItemCardList from '../../components/ItemCardList';
 
 const profileQuery = gql`
-    query user($userId: ID!) {
-        user(id: $userId) {
-            id
-            email
-            fullname
-            bio
-            owneditems {
-                title
-                description
-                imageurl
-                tags
-                created
-                available
-                tags
-                itemowner {
-                    id
-                    fullname
-                    email
-                }
-            }
-            borroweditems {
-                title
-                description
-                imageurl
-                tags
-                created
-                available
-            }
+  query user($userId: ID!) {
+    user(id: $userId) {
+      id
+      email
+      fullname
+      bio
+      owneditems {
+        title
+        description
+        imageurl
+        tags
+        created
+        available
+        tags
+        itemowner {
+          id
+          fullname
+          email
         }
+      }
+      borroweditems {
+        title
+        description
+        imageurl
+        tags
+        created
+        available
+      }
     }
+  }
 `;
 
 const ProfileContainer = props => {
-    const userId = props.match.params.itemownerId;
-    return (
-        <Query query={profileQuery} variables={{ userId }}>
-            {({ loading, error, data }) => {
-                if (loading) return <LoadingWheel />;
-                if (error) return <p>Error!</p>;
-                return (
-                    <div>
-                        <Profile
-                            profileInfo={props.location.state}
-                            itemInfo={data.user.owneditems}
-                        />
-                        <ItemCardList
-                            itemsData={data.user.owneditems}
-                            itemFilters={[]}
-                        />
-                    </div>
-                );
-            }}
-        </Query>
-    );
+  const userId = props.match.params.itemownerId;
+  return (
+    <Query query={profileQuery} variables={{ userId }}>
+      {({ loading, error, data }) => {
+        if (loading) return <LoadingWheel />;
+        if (error) return <p>Error!</p>;
+        return (
+          <div>
+            <Profile profileInfo={data.user} itemInfo={data.user.owneditems} />
+            <ItemCardList itemsData={data.user.owneditems} itemFilters={[]} />
+          </div>
+        );
+      }}
+    </Query>
+  );
 };
 
 ProfileContainer.defaultProps = {
-    match: {},
-    location: {}
+  match: {},
+  location: {}
 };
 
 export default ProfileContainer;
 
 ProfileContainer.propTypes = {
-    match: PropTypes.objectOf(
-        PropTypes.oneOfType([
-            PropTypes.bool,
-            PropTypes.object,
-            PropTypes.string
-        ])
-    ),
-    location: PropTypes.objectOf(
-        PropTypes.oneOfType([PropTypes.string, PropTypes.object])
-    )
+  match: PropTypes.objectOf(
+    PropTypes.oneOfType([PropTypes.bool, PropTypes.object, PropTypes.string])
+  ),
+  location: PropTypes.objectOf(
+    PropTypes.oneOfType([PropTypes.string, PropTypes.object])
+  )
 };

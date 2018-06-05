@@ -5,22 +5,24 @@ import Footer from '../Footer/';
 
 import './styles.css';
 
-const Layout = ({ children }) => (
+const Layout = ({ children }) => {
+  return (
     <div className="appContentWrapper">
-        <div className="appHeader">
-            <Header />
-        </div>
-        <div className="appContent">{children}</div>
-        <Footer />
+      <div className="appHeader">
+        {window.location.pathname !== '/login' && <Header />}
+      </div>
+      <div className="appContent">{children}</div>
+      <Footer />
     </div>
-);
+  );
+};
 
 Layout.defaultProps = {
-    children: null
+  children: null
 };
 
 Layout.propTypes = {
-    children: PropTypes.node
+  children: PropTypes.node
 };
 
 export default Layout;

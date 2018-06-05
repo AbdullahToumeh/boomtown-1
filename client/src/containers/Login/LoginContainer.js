@@ -15,7 +15,6 @@ class LoginContainer extends Component {
   static propTypes = {};
 
   handleEmail = event => {
-    console.log('working');
     this.setState({ email: event.target.value });
   };
 
