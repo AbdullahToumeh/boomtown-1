@@ -12,89 +12,87 @@ import RaisedButton from 'material-ui/RaisedButton';
 import logo from '../../images/boomtown-logo.svg';
 import './styles.css';
 import TagFilterField from '../TagFilterField/';
+import { auth } from '../../firebase/firebase';
 
 const itemsQuery = gql`
-    query {
-        items {
-            tags
-        }
+  query {
+    items {
+      tags
     }
+  }
 `;
 
 class Header extends Component {
-    state = {
-        windowLocation: window.location.href
-    };
+  state = {
+    windowLocation: window.location.href
+  };
 
-    getTags = items => {
-        const tags = [];
-        if (items.length && items[0] !== undefined) {
-            items.map(item => {
-                if (item.tags !== undefined) {
-                    if (!item.tags.includes(undefined)) {
-                        item.tags.map(tag => {
-                            if (!tags.includes(tag)) {
-                                tags.push(tag);
-                            }
-                        });
-                    }
-                }
+  getTags = items => {
+    const tags = [];
+    if (items.length && items[0] !== undefined) {
+      items.map(item => {
+        if (item.tags !== undefined) {
+          if (!item.tags.includes(undefined)) {
+            item.tags.map(tag => {
+              if (!tags.includes(tag)) {
+                tags.push(tag);
+              }
             });
+          }
         }
-        return tags;
-    };
-
-    render() {
-        return (
-            <Query query={itemsQuery}>
-                {({ loading, error, data }) => {
-                    if (loading) return <p>loading</p>;
-                    if (error) return <p>Error!</p>;
-                    const tags = this.getTags(data.items);
-                    return (
-                        <Paper className={'header-bar'}>
-                            <div className={'home-filter-area'}>
-                                <Link to={'/'} className={'home-logo'}>
-                                    <img
-                                        src={logo}
-                                        alt="Boomtown Logo"
-                                        className={'home-logo'}
-                                    />
-                                </Link>
-                                {!this.state.windowLocation.includes(
-                                    '/profile'
-                                ) &&
-                                    tags.length && (
-                                        <TagFilterField
-                                            tags={tags}
-                                            selectedTags={
-                                                this.props.itemsData.itemFilters
-                                            }
-                                        />
-                                    )}
-                            </div>
-                            <div>
-                                <RaisedButton
-                                    label="My Profile"
-                                    className={'my-profile-button'}
-                                    primary
-                                />
-                                <RaisedButton label="Logout" secondary />
-                            </div>
-                        </Paper>
-                    );
-                }}
-            </Query>
-        );
+      });
     }
+    return tags;
+  };
+
+  render() {
+    console.log(auth.currentUser);
+    return (
+      <Query query={itemsQuery}>
+        {({ loading, error, data }) => {
+          if (loading) return <p>loading</p>;
+          if (error) return <p>Error!</p>;
+          const tags = this.getTags(data.items);
+          return (
+            <Paper className={'header-bar'}>
+              <div className={'home-filter-area'}>
+                <Link to={'/'} className={'home-logo'}>
+                  <img src={logo} alt="Boomtown Logo" className={'home-logo'} />
+                </Link>
+                {!this.state.windowLocation.includes('/profile') &&
+                  tags.length && (
+                    <TagFilterField
+                      tags={tags}
+                      selectedTags={this.props.itemsData.itemFilters}
+                    />
+                  )}
+              </div>
+              <div>
+                <RaisedButton
+                  label="My Profile"
+                  className={'my-profile-button'}
+                  primary
+                />
+                <RaisedButton
+                  label="Logout"
+                  secondary
+                  onClick={() => auth.signOut()}
+                />
+              </div>
+            </Paper>
+          );
+        }}
+      </Query>
+    );
+  }
 }
 
 Header.propTypes = {
-    itemsData: PropTypes.objectOf(
-        PropTypes.oneOfType([PropTypes.array, PropTypes.string, PropTypes.bool])
-    ).isRequired
+  itemsData: PropTypes.objectOf(
+    PropTypes.oneOfType([PropTypes.array, PropTypes.string, PropTypes.bool])
+  ).isRequired
 };
 
 export default connect(state => ({
-    itemsData: state.itemsData
+  itemsData: state.itemsData
 }))(Header);

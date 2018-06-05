@@ -26,7 +26,6 @@ class LoginContainer extends Component {
   login = async event => {
     const { email, password } = this.state;
     event.preventDefault();
-    console.log('You clicked the login button.', email, password);
     try {
       await auth.signInWithEmailAndPassword(email, password);
       this.props.history.push('/');
