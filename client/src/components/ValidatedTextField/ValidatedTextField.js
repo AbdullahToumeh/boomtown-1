@@ -6,7 +6,7 @@ import { blueGrey900 } from 'material-ui/styles/colors';
 
 const styles = {
   fieldStyle: {
-    width: '100%'
+    width: '47%'
   },
   errorStyle: {
     color: blueGrey900,

@@ -35,8 +35,8 @@ const Login = ({ login, handleEmail, handlePassword }) => (
             <RaisedButton
               className="enterButton"
               primary
-              fullWidth
               type="submit"
+              style={{ width: '47%' }}
             >
               Enter
             </RaisedButton>
