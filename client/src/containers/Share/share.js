@@ -59,6 +59,7 @@ export default class Share extends Component {
     this.handleDescription = this.handleDescription.bind(this);
     this.handleFilter = this.handleFilter.bind(this);
     this.handleTags = this.handleTags.bind(this);
+    this.userId = 'UQ9tSckgoEYplNYDdlWafJOHrw52';
   }
   state = {
     stepIndex: 0,
@@ -67,7 +68,7 @@ export default class Share extends Component {
       imageurl: placeHolder,
       title: 'Title',
       itemowner: {
-        id: 'UQ9tSckgoEYplNYDdlWafJOHrw52',
+        id: this.userId,
         bio: '',
         fullname: 'Current User',
         email: ''
@@ -90,7 +91,7 @@ export default class Share extends Component {
         title: this.state.itemCardData.title,
         [event.target.name]: event.target.value,
         itemowner: {
-          id: 'UQ9tSckgoEYplNYDdlWafJOHrw52',
+          id: this.userId,
           fullname: 'Current User',
           email: ''
         },
@@ -128,42 +129,40 @@ export default class Share extends Component {
       selectedTags.splice(selectedTags.indexOf(tag), 1);
       const itemTags = [];
       selectedTags.map(tag => itemTags.push(tag.tag));
-      console.log(itemTags);
       this.setState({
         selectedTags: [...selectedTags],
         itemCardData: {
           tags: [...itemTags],
           itemowner: {
-            id: 'UQ9tSckgoEYplNYDdlWafJOHrw52',
+            id: this.userId,
             fullname: 'Current User',
             email: ''
           },
           title: this.state.itemCardData.title,
           description: this.state.itemCardData.description,
           created: new Date(),
-          imageurl: placeHolder,
-          finished: true
-        }
+          imageurl: placeHolder
+        },
+        finished: true
       });
     } else {
       const itemTags = [];
       selectedTags.map(tag => itemTags.push(tag.tag));
-      console.log(itemTags);
       this.setState({
         selectedTags: [...selectedTags, tag],
         itemCardData: {
           tags: [...itemTags, tag.tag],
           itemowner: {
-            id: 'UQ9tSckgoEYplNYDdlWafJOHrw52',
+            id: this.userId,
             fullname: 'Current User',
             email: ''
           },
           title: this.state.itemCardData.title,
           description: this.state.itemCardData.description,
           created: new Date(),
-          imageurl: placeHolder,
-          finished: true
-        }
+          imageurl: placeHolder
+        },
+        finished: true
       });
     }
   }
@@ -175,12 +174,12 @@ export default class Share extends Component {
         description: currentDescription,
         [event.target.name]: event.target.value,
         itemowner: {
-          id: 'UQ9tSckgoEYplNYDdlWafJOHrw52',
+          id: this.userId,
           fullname: 'Current User',
           email: ''
         },
         created: new Date(),
-        tags: [],
+        tags: this.state.itemCardData.tags,
         imageurl: placeHolder
       },
       finished: true
@@ -251,7 +250,8 @@ export default class Share extends Component {
                         tags: this.state.selectedTags.map(tag =>
                           tag.tagid.toString()
                         ),
-                        itemowner: 'eEvh1WUF5nb5eeUksUQb3Ph0kOU2'
+                        itemowner: this.userId,
+                        imageurl: placeHolder
                       }
                     });
                   }}
