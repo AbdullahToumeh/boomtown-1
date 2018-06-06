@@ -15,6 +15,7 @@ import placeHolder from '../../images/item-placeholder.jpg';
 import ItemCard from '../../components/ItemCard';
 import LoadingProgress from './LoadingProgress';
 import { itemsQuery } from '../Items/ItemsContainer';
+import { auth } from '../../firebase/firebase';
 
 const addItemMutation = gql`
   mutation addItem(
@@ -69,10 +70,10 @@ export default class Share extends Component {
       imageurl: placeHolder,
       title: 'Title',
       itemowner: {
-        id: this.userId,
+        id: auth.currentUser.uid,
         bio: '',
         fullname: 'Current User',
-        email: ''
+        email: auth.currentUser.email
       },
       created: new Date(),
       tags: [],
@@ -92,9 +93,9 @@ export default class Share extends Component {
         title: this.state.itemCardData.title,
         [event.target.name]: event.target.value,
         itemowner: {
-          id: this.userId,
+          id: auth.currentUser.uid,
           fullname: 'Current User',
-          email: ''
+          email: auth.currentUser.email
         },
         created: new Date(),
         tags: [],
@@ -135,9 +136,9 @@ export default class Share extends Component {
         itemCardData: {
           tags: [...itemTags],
           itemowner: {
-            id: this.userId,
+            id: auth.currentUser.uid,
             fullname: 'Current User',
-            email: ''
+            email: auth.currentUser.email
           },
           title: this.state.itemCardData.title,
           description: this.state.itemCardData.description,
@@ -154,9 +155,9 @@ export default class Share extends Component {
         itemCardData: {
           tags: [...itemTags, tag.tag],
           itemowner: {
-            id: this.userId,
+            id: auth.currentUser.uid,
             fullname: 'Current User',
-            email: ''
+            email: auth.currentUser.email
           },
           title: this.state.itemCardData.title,
           description: this.state.itemCardData.description,
@@ -175,9 +176,9 @@ export default class Share extends Component {
         description: currentDescription,
         [event.target.name]: event.target.value,
         itemowner: {
-          id: this.userId,
+          id: auth.currentUser.uid,
           fullname: 'Current User',
-          email: ''
+          email: auth.currentUser.email
         },
         created: new Date(),
         tags: this.state.itemCardData.tags,
@@ -260,7 +261,7 @@ export default class Share extends Component {
                         tags: this.state.selectedTags.map(tag =>
                           tag.tagid.toString()
                         ),
-                        itemowner: this.userId,
+                        itemowner: auth.currentUser.uid,
                         imageurl: placeHolder
                       }
                     });
@@ -268,7 +269,7 @@ export default class Share extends Component {
                 >
                   <Stepper
                     activeStep={stepIndex}
-                    linear={false}
+                    // linear={false}
                     orientation="vertical"
                   >
                     <Step>
@@ -449,8 +450,25 @@ export default class Share extends Component {
                           Great! If you're happy with everything, tap the
                           button.
                         </label>
-                        <button type="submit">Submit</button>
-                        {this.renderStepActions(3)}
+                        {/* <button type="submit">Submit</button> */}
+                        <div style={{ margin: '12px 0' }}>
+                          <RaisedButton
+                            label="Submit"
+                            type="submit"
+                            disableTouchRipple={true}
+                            disableFocusRipple={true}
+                            primary={true}
+                            disabled={!this.state.finished}
+                            onClick={this.handleNext}
+                            style={{ marginRight: 12 }}
+                          />
+                          <FlatButton
+                            label="Back"
+                            disableTouchRipple={true}
+                            disableFocusRipple={true}
+                            onClick={this.handlePrev}
+                          />
+                        </div>
                       </StepContent>
                     </Step>
                   </Stepper>
