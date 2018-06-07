@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Route } from 'react-router-dom';
 import Header from '../HeaderBar';
 import Footer from '../Footer/';
 
@@ -9,7 +10,9 @@ const Layout = ({ children }) => {
   return (
     <div className="appContentWrapper">
       <div className="appHeader">
-        {window.location.pathname !== '/login' && <Header />}
+        <Route exact path="/" component={Header} />
+        <Route strict path="/profile/" component={Header} />
+        <Route exact path="/share" component={Header} />
       </div>
       <div className="appContent">{children}</div>
       <Footer />

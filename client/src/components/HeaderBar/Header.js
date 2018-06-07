@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -23,9 +23,12 @@ const itemsQuery = gql`
 `;
 
 class Header extends Component {
-  state = {
-    windowLocation: window.location.href
-  };
+  constructor() {
+    super();
+    this.state = {
+      windowLocation: window.location.href
+    };
+  }
 
   getTags = items => {
     const tags = [];
@@ -46,6 +49,7 @@ class Header extends Component {
   };
 
   render() {
+    // console.log(this.state.windowLocation);
     return (
       <Query query={itemsQuery}>
         {({ loading, error, data }) => {
@@ -58,13 +62,16 @@ class Header extends Component {
                 <Link to={'/'} className={'home-logo'}>
                   <img src={logo} alt="Boomtown Logo" className={'home-logo'} />
                 </Link>
-                {!this.state.windowLocation.includes('/profile') &&
-                  tags.length && (
+                <Route
+                  exact
+                  path="/"
+                  render={props => (
                     <TagFilterField
                       tags={tags}
                       selectedTags={this.props.itemsData.itemFilters}
                     />
                   )}
+                />
               </div>
               <div>
                 <Link to={`/profile/${auth.currentUser.uid}`}>

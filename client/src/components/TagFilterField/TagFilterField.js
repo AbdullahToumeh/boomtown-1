@@ -8,35 +8,35 @@ import MenuItem from 'material-ui/MenuItem';
 import { get_itemFilters } from '../../redux/modules/items';
 
 const TagFilterField = ({ tags, dispatch, selectedTags }) => {
-    function handleFilter(value) {
-        dispatch(get_itemFilters(value));
-    }
-
-    return (
-        <SelectField
-            className={'filter-area'}
-            multiple
-            hintText={'Filter by Tag'}
-            onChange={(event, index, value) => handleFilter(value[0])}
-        >
-            {tags &&
-                tags.map((tag, index) => (
-                    <MenuItem
-                        key={index}
-                        value={tag}
-                        insetChildren
-                        primaryText={tag}
-                        checked={selectedTags && selectedTags.indexOf(tag) > -1}
-                    />
-                ))}
-        </SelectField>
-    );
+  function handleFilter(value) {
+    dispatch(get_itemFilters(value));
+  }
+  console.log(selectedTags);
+  return (
+    <SelectField
+      className={'filter-area'}
+      multiple
+      hintText={'Filter by Tag'}
+      onChange={(event, index, value) => handleFilter(value[0])}
+    >
+      {tags &&
+        tags.map((tag, index) => (
+          <MenuItem
+            key={index}
+            value={tag}
+            insetChildren
+            primaryText={tag}
+            checked={selectedTags && selectedTags.indexOf(tag) > -1}
+          />
+        ))}
+    </SelectField>
+  );
 };
 
 TagFilterField.propTypes = {
-    tags: PropTypes.arrayOf(PropTypes.string).isRequired,
-    selectedTags: PropTypes.arrayOf(PropTypes.string).isRequired,
-    dispatch: PropTypes.func.isRequired
+  tags: PropTypes.arrayOf(PropTypes.string).isRequired,
+  selectedTags: PropTypes.arrayOf(PropTypes.string).isRequired,
+  dispatch: PropTypes.func.isRequired
 };
 
 // using this to connect DISPATCH to the TagFilterField
