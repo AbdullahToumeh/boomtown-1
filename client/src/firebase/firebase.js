@@ -21,5 +21,6 @@ if (!firebase.apps.length) {
 }
 
 const auth = firebase.auth();
+const imageRef = firebase.storage().ref();
 
-export { auth };
+export { auth, imageRef };

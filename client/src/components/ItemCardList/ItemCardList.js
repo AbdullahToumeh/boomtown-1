@@ -23,7 +23,7 @@ const ItemCardList = props => {
       disableImagesLoaded={false}
       updateOnEachImageLoad
     >
-      {props.itemFilters.length !== 0 && props.itemsData
+      {props.itemFilters.length !== 0
         ? props.itemFilters.map(filter => {
             const filteredItems = props.itemsData.filter(item =>
               item.tags.includes(filter)

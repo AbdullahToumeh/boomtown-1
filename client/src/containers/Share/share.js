@@ -15,7 +15,8 @@ import placeHolder from '../../images/item-placeholder.jpg';
 import ItemCard from '../../components/ItemCard';
 import LoadingProgress from './LoadingProgress';
 import { itemsQuery } from '../Items/ItemsContainer';
-import { auth } from '../../firebase/firebase';
+import { auth, imageRef } from '../../firebase/firebase';
+import { POINT_CONVERSION_COMPRESSED } from 'constants';
 
 const addItemMutation = gql`
   mutation addItem(
@@ -99,7 +100,7 @@ export default class Share extends Component {
         },
         created: new Date(),
         tags: [],
-        imageurl: placeHolder
+        imageurl: this.state.itemCardData.imageurl
       }
     });
   };
@@ -143,7 +144,7 @@ export default class Share extends Component {
           title: this.state.itemCardData.title,
           description: this.state.itemCardData.description,
           created: new Date(),
-          imageurl: placeHolder
+          imageurl: this.state.itemCardData.imageurl
         },
         finished: true
       });
@@ -162,7 +163,7 @@ export default class Share extends Component {
           title: this.state.itemCardData.title,
           description: this.state.itemCardData.description,
           created: new Date(),
-          imageurl: placeHolder
+          imageurl: this.state.itemCardData.imageurl
         },
         finished: true
       });
@@ -182,7 +183,7 @@ export default class Share extends Component {
         },
         created: new Date(),
         tags: this.state.itemCardData.tags,
-        imageurl: placeHolder
+        imageurl: this.state.itemCardData.imageurl
       },
       finished: true
     });
@@ -227,6 +228,38 @@ export default class Share extends Component {
     this.setState({ finished: true });
   }
 
+  // A lot of this code was inspired by:
+  // https://time2hack.com/2017/10/upload-files-to-firebase-storage-with-javascript/
+
+  isPhotoFinished() {
+    // grabs the file object from the photo input field
+    const file = document.querySelector('#photo').files[0];
+
+    //grabs the name (formatted with the date) and metadata from the uploaded file
+    const name = +new Date() + '-' + file.name;
+    const metadata = { contentType: file.type };
+
+    // creates the file upload task for the firebase image storage reference, this task is a promise
+    const task = imageRef.child(name).put(file, metadata);
+
+    task
+      .then(snapshot => {
+        console.log(snapshot.downloadURL);
+        this.setState({
+          finished: true,
+          itemCardData: {
+            imageurl: snapshot.downloadURL,
+            title: this.state.itemCardData.title,
+            itemowner: this.state.itemCardData.itemowner,
+            created: this.state.itemCardData.created,
+            tags: this.state.itemCardData.tags,
+            description: this.state.itemCardData.description
+          }
+        });
+      })
+      .catch(e => console.log(e));
+  }
+
   render() {
     const { stepIndex } = this.state;
     return (
@@ -262,16 +295,12 @@ export default class Share extends Component {
                           tag.tagid.toString()
                         ),
                         itemowner: auth.currentUser.uid,
-                        imageurl: placeHolder
+                        imageurl: this.state.itemCardData.imageurl
                       }
                     });
                   }}
                 >
-                  <Stepper
-                    activeStep={stepIndex}
-                    // linear={false}
-                    orientation="vertical"
-                  >
+                  <Stepper activeStep={stepIndex} orientation="vertical">
                     <Step>
                       <StepButton
                         onClick={() =>
@@ -304,9 +333,10 @@ export default class Share extends Component {
                                 <input
                                   type="file"
                                   accept="image/*"
+                                  id="photo"
                                   {...input}
                                   required
-                                  onChange={this.isFinished.bind(this)}
+                                  onChange={this.isPhotoFinished.bind(this)}
                                   style={{
                                     display: 'none'
                                   }}
