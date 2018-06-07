@@ -5,6 +5,7 @@ import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 
 import SelectField from 'material-ui/SelectField';
+import LinearProgress from 'material-ui/LinearProgress';
 import MenuItem from 'material-ui/MenuItem';
 import { Step, Stepper, StepButton, StepContent } from 'material-ui/Stepper';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -15,6 +16,7 @@ import placeHolder from '../../images/item-placeholder.jpg';
 import ItemCard from '../../components/ItemCard';
 import LoadingProgress from './LoadingProgress';
 import { itemsQuery } from '../Items/ItemsContainer';
+import { tagsQuery } from '../../components/HeaderBar/Header';
 import { auth, imageRef } from '../../firebase/firebase';
 import { POINT_CONVERSION_COMPRESSED } from 'constants';
 
@@ -81,7 +83,9 @@ export default class Share extends Component {
       description: 'Description'
     },
     finished: false,
-    value: ''
+    value: '',
+    isUploading: false,
+    linearProgress: 0
   };
 
   onSubmit(values) {
@@ -242,11 +246,25 @@ export default class Share extends Component {
     // creates the file upload task for the firebase image storage reference, this task is a promise
     const task = imageRef.child(name).put(file, metadata);
 
+    const progressBar = document.getElementById('progress-bar');
+
+    task.on(
+      'state_changed',
+      snapshot => {
+        let percentage = snapshot.bytesTransferred / snapshot.totalBytes * 100;
+        this.setState({ linearProgress: percentage, isUploading: true });
+        console.log(percentage);
+      },
+      function error(err) {},
+      function complete() {}
+    );
+
     task
       .then(snapshot => {
-        console.log(snapshot.downloadURL);
         this.setState({
           finished: true,
+          isUploading: false,
+          stepIndex: this.state.stepIndex + 1,
           itemCardData: {
             imageurl: snapshot.downloadURL,
             title: this.state.itemCardData.title,
@@ -275,9 +293,14 @@ export default class Share extends Component {
               mutation={addItemMutation}
               update={(cache, { data }) => {
                 const { items } = cache.readQuery({ query: itemsQuery });
+                const tags = cache.readQuery({ query: tagsQuery });
                 cache.writeQuery({
                   query: itemsQuery,
                   data: { items: items.concat([addItemMutation]) }
+                });
+                cache.writeQuery({
+                  query: tagsQuery,
+                  data: { items: tags.items.concat([addItemMutation]) }
                 });
               }}
             >
@@ -345,6 +368,13 @@ export default class Share extends Component {
                             );
                           }}
                         </Field>
+                        {this.state.isUploading && (
+                          <LinearProgress
+                            id="progress-bar"
+                            variant="determinate"
+                            value={this.state.linearProgress}
+                          />
+                        )}
                         {this.renderStepActions(0)}
                       </StepContent>
                     </Step>

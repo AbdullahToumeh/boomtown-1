@@ -14,7 +14,7 @@ import './styles.css';
 import TagFilterField from '../TagFilterField/';
 import { auth } from '../../firebase/firebase';
 
-const itemsQuery = gql`
+export const tagsQuery = gql`
   query {
     items {
       tags
@@ -32,7 +32,7 @@ class Header extends Component {
 
   getTags = items => {
     const tags = [];
-    if (items.length && items[0] !== undefined) {
+    if (items && items.length && items[0] !== undefined) {
       items.map(item => {
         if (item.tags !== undefined) {
           if (!item.tags.includes(undefined)) {
@@ -51,10 +51,11 @@ class Header extends Component {
   render() {
     // console.log(this.state.windowLocation);
     return (
-      <Query query={itemsQuery}>
+      <Query query={tagsQuery}>
         {({ loading, error, data }) => {
           if (loading) return <p>loading</p>;
           if (error) return <p>Error!</p>;
+          console.log(data);
           const tags = this.getTags(data.items);
           return (
             <Paper className={'header-bar'}>
