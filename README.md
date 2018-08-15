@@ -24,5 +24,6 @@ https://github.com/KyleAMathews/react-gravatar
 
 1.  Download ZIP with project files.
 2.  Run `npm install` inside /client folder.
-3.  Run `json-server --watch db.json` inside /server folder.
-4.  Run `npm start` (Y to run on different localhost) inside /client folder.
+3.  Run `npm install` inside /server folder.
+4.  Run `npm run dev` inside /server folder.
+5.  Run `npm start` inside /client folder.

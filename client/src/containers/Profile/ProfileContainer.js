@@ -8,7 +8,7 @@ import LoadingWheel from '../../components/LoadingWheel';
 import Profile from './Profile';
 import ItemCardList from '../../components/ItemCardList';
 
-const profileQuery = gql`
+export const profileQuery = gql`
   query user($userId: ID!) {
     user(id: $userId) {
       id

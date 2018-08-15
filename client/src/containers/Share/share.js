@@ -16,6 +16,7 @@ import placeHolder from '../../images/item-placeholder.jpg';
 import ItemCard from '../../components/ItemCard';
 import LoadingProgress from './LoadingProgress';
 import { itemsQuery } from '../Items/ItemsContainer';
+import { profileQuery } from '../Profile/ProfileContainer';
 import { tagsQuery } from '../../components/HeaderBar/Header';
 import { auth, imageRef } from '../../firebase/firebase';
 import { POINT_CONVERSION_COMPRESSED } from 'constants';
@@ -294,6 +295,7 @@ export default class Share extends Component {
               update={(cache, { data }) => {
                 const { items } = cache.readQuery({ query: itemsQuery });
                 const tags = cache.readQuery({ query: tagsQuery });
+                const profile = cache.readQuery({ query: profileQuery });
                 cache.writeQuery({
                   query: itemsQuery,
                   data: { items: items.concat([addItemMutation]) }

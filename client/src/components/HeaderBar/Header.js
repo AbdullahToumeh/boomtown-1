@@ -13,6 +13,7 @@ import logo from '../../images/boomtown-logo.svg';
 import './styles.css';
 import TagFilterField from '../TagFilterField/';
 import { auth } from '../../firebase/firebase';
+import LoadingWheel from '../LoadingWheel';
 
 export const tagsQuery = gql`
   query {
@@ -53,7 +54,7 @@ class Header extends Component {
     return (
       <Query query={tagsQuery}>
         {({ loading, error, data }) => {
-          if (loading) return <p>loading</p>;
+          if (loading) return <LoadingWheel />;
           if (error) return <p>Error!</p>;
           console.log(data);
           const tags = this.getTags(data.items);
